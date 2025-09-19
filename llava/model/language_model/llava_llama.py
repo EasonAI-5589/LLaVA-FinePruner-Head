@@ -26,6 +26,7 @@ from transformers.generation.utils import GenerateOutput
 
 from .modeling_llama_fastv import FastVLlamaModel
 from .modeling_llama_fastv_fine import FineFastVLlamaModel
+from .modeling_llama_fastv_ablation_a import FineFastVLlamaModelAblationA
 from .modeling_llama_pdrop import PDropLlamaModel
 from .modeling_llama_sparsevlm import SparseLlamaModel
 from ..llava_arch import LlavaMetaModel, LlavaMetaForCausalLM
@@ -58,6 +59,14 @@ class FineFastVLlavaLlamaModel(LlavaMetaModel, FineFastVLlamaModel):
         super(FineFastVLlavaLlamaModel, self).__init__(config, visual_token_num=visual_token_num)
 
 
+class FineFastVLlavaLlamaModelAblationA(LlavaMetaModel, FineFastVLlamaModelAblationA):
+    # 消融研究A: 头筛选策略对比
+    config_class = LlavaLlamaConfig
+
+    def __init__(self, config: LlamaConfig, visual_token_num: int):
+        super(FineFastVLlavaLlamaModelAblationA, self).__init__(config, visual_token_num=visual_token_num)
+
+
 class PDropLlavaLlamaModel(LlavaMetaModel, PDropLlamaModel):
     # Alter LlavaLlamaModel to PDropLlavaLlamaModel
     config_class = LlavaLlamaConfig
@@ -83,6 +92,9 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
         elif pruning_method == "fastv+finepruner":
             print(f"Use FineFastV!")
             self.model = FineFastVLlavaLlamaModel(config, visual_token_num)
+        elif pruning_method == "ablation_a":
+            print(f"Use Ablation A (Head Selection)!")
+            self.model = FineFastVLlavaLlamaModelAblationA(config, visual_token_num)
         elif pruning_method == "pdrop":
             print(f"Use PDrop!")
             self.model = PDropLlavaLlamaModel(config, visual_token_num)

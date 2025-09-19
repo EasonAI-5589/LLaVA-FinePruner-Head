@@ -180,3 +180,38 @@ done
 
 
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mme.sh fastv+finepruner 192 24
+
+# ========== 消融研究A: 头筛选策略对比 ==========
+echo "🧪 开始消融研究A: 头筛选策略对比实验"
+
+# 配置参数
+MODEL_PATH="./checkpoints/llava-v1.5-7b"
+DATA_PATH="./playground/data/eval/pope/val.json"
+IMAGE_FOLDER="./playground/data/eval/pope/val2014"
+OUTPUT_DIR="./ablation_a_results"
+H=16
+VISUAL_TOKEN_NUM=128
+
+# 头筛选策略列表
+STRATEGIES=("sum" "variance" "entropy" "max_attention" "attention_range" "sparsity" "top_k_sum" "weighted_quality" "gini_coefficient")
+
+mkdir -p "$OUTPUT_DIR"
+
+# 运行所有头筛选策略
+for strategy in "${STRATEGIES[@]}"; do
+    echo "测试头筛选策略: $strategy"
+
+    CUDA_VISIBLE_DEVICES=0 python -m llava.eval.model_vqa_loader \
+        --model-path "$MODEL_PATH" \
+        --question-file "$DATA_PATH" \
+        --image-folder "$IMAGE_FOLDER" \
+        --answers-file "$OUTPUT_DIR/answers_$strategy.jsonl" \
+        --temperature 0 \
+        --conv-mode vicuna_v1 \
+        --pruning-method ablation_a \
+        --H "$H" \
+        --visual-token-num "$VISUAL_TOKEN_NUM" \
+        --head-selection-strategy "$strategy"
+done
+
+echo "✅ 消融研究A实验完成! 结果保存在: $OUTPUT_DIR"

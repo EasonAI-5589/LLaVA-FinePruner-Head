@@ -90,6 +90,7 @@ def eval_model(args):
     
     # 添加多头注意力超参数
     model.config.H=args.H
+    model.config.head_selection_strategy=args.head_selection_strategy
 
     # Data
     questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
@@ -153,9 +154,15 @@ if __name__ == "__main__":
     parser.add_argument("--top_p", type=float, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=128)
-    parser.add_argument("--pruning_method", type=str, default=None)
+    parser.add_argument("--pruning_method", type=str, default="ablation_a",
+                        help="Pruning method: fastv, fastv+finepruner, ablation_a, pdrop, sparsevlm")
     parser.add_argument("--visual_token_num", type=int, default=576)
     parser.add_argument("--H", type=int, default=32)
+    parser.add_argument("--head-selection-strategy", type=str, default="sum",
+                        choices=["sum", "variance", "entropy", "max_attention",
+                                "attention_range", "sparsity", "top_k_sum",
+                                "weighted_quality", "gini_coefficient"],
+                        help="Head selection strategy for attention")
     args = parser.parse_args()
 
     eval_model(args)
