@@ -160,6 +160,136 @@ class FineFastVLlamaModelAblationA(LlamaModel):
         visual_head_index = gini.topk(k=self.H).indices
         return visual_head_index
 
+    def head_selection_multi_objective(self, image_attention):
+        """方法9: 多目标协同优化 - 结合信息丰富度、多样性和稀疏性"""
+        attention_probs = torch.softmax(image_attention, dim=-1)  # (H, N)
+        H, N = attention_probs.shape
+
+        # 目标1: 信息丰富度 (结合熵和峰度)
+        entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
+        mean_attn = attention_probs.mean(dim=-1, keepdim=True)
+        variance = ((attention_probs - mean_attn) ** 2).mean(dim=-1)
+        kurtosis = ((attention_probs - mean_attn) ** 4).mean(dim=-1) / (variance ** 2 + 1e-8)
+
+        # 归一化
+        entropy_norm = (entropy - entropy.min()) / (entropy.max() - entropy.min() + 1e-8)
+        kurtosis_norm = (kurtosis - kurtosis.min()) / (kurtosis.max() - kurtosis.min() + 1e-8)
+        info_richness = 0.7 * entropy_norm + 0.3 * kurtosis_norm
+
+        # 目标2: 头多样性 (基于相互相似度)
+        attention_norm = torch.nn.functional.normalize(attention_probs, p=2, dim=-1)
+        similarity_matrix = torch.mm(attention_norm, attention_norm.t())
+        avg_similarity = (similarity_matrix.sum(dim=-1) - 1) / (H - 1)  # 排除自身
+        diversity_score = 1 / (avg_similarity + 1e-8)
+
+        # 目标3: 稀疏性
+        sparsity_score = (attention_probs ** 2).sum(dim=-1)
+
+        # 归一化所有目标
+        diversity_norm = (diversity_score - diversity_score.min()) / (diversity_score.max() - diversity_score.min() + 1e-8)
+        sparsity_norm = (sparsity_score - sparsity_score.min()) / (sparsity_score.max() - sparsity_score.min() + 1e-8)
+
+        # 多目标融合 (可调权重)
+        alpha, beta, gamma = 0.4, 0.3, 0.3
+        composite_score = alpha * info_richness + beta * diversity_norm + gamma * sparsity_norm
+
+        visual_head_index = composite_score.topk(k=self.H).indices
+        return visual_head_index
+
+    def head_selection_graph_based(self, image_attention):
+        """方法10: 基于图结构的头选择 - 考虑头之间的关系网络"""
+        attention_probs = torch.softmax(image_attention, dim=-1)  # (H, N)
+        H, N = attention_probs.shape
+
+        # 1. 构建节点特征 (每个头的5维特征)
+        sparsity = (attention_probs ** 2).sum(dim=-1)
+        entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
+        max_attention = attention_probs.max(dim=-1)[0]
+        variance = attention_probs.var(dim=-1)
+        mean_attn = attention_probs.mean(dim=-1, keepdim=True)
+        effective_range = (attention_probs > mean_attn).float().mean(dim=-1)
+
+        # 节点特征矩阵 (H, 5)
+        node_features = torch.stack([sparsity, entropy, max_attention, variance, effective_range], dim=-1)
+
+        # 2. 构建邻接矩阵 (基于注意力模式相似度)
+        attention_norm = torch.nn.functional.normalize(attention_probs, p=2, dim=-1)
+        similarity_matrix = torch.mm(attention_norm, attention_norm.t())
+        threshold = 0.1  # 相似度阈值
+        adjacency_matrix = (similarity_matrix > threshold).float()
+        adjacency_matrix.fill_diagonal_(0)  # 移除自环
+
+        # 归一化邻接矩阵
+        row_sum = adjacency_matrix.sum(dim=-1, keepdim=True)
+        adjacency_matrix = adjacency_matrix / (row_sum + 1e-8)
+
+        # 3. 简化的图卷积 (消息传递)
+        # 第一层
+        messages_1 = torch.mm(adjacency_matrix, node_features)
+        node_features_1 = torch.relu(node_features + messages_1)
+
+        # 第二层
+        messages_2 = torch.mm(adjacency_matrix, node_features_1)
+        node_features_2 = torch.relu(node_features_1 + messages_2)
+
+        # 4. 聚合特征并计算最终得分
+        final_scores = node_features_2.mean(dim=-1)  # 简单平均
+
+        visual_head_index = final_scores.topk(k=self.H).indices
+        return visual_head_index
+
+    def head_selection_hierarchical(self, image_attention):
+        """方法11: 分层选择策略 - 粗选+精选的两阶段方法"""
+        attention_probs = torch.softmax(image_attention, dim=-1)  # (H, N)
+        H, N = attention_probs.shape
+
+        # 第一阶段: 粗选 (保留更多候选)
+        coarse_k = min(H, max(self.H * 2, 16))  # 粗选保留2倍目标数量
+
+        # 粗选指标: 简单的稀疏性+熵组合
+        sparsity = (attention_probs ** 2).sum(dim=-1)
+        entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
+        entropy_norm = (entropy - entropy.min()) / (entropy.max() - entropy.min() + 1e-8)
+        coarse_scores = 0.6 * sparsity + 0.4 * (1 - entropy_norm)
+
+        # 获取粗选候选
+        coarse_indices = coarse_scores.topk(k=coarse_k).indices
+        coarse_attention = attention_probs[coarse_indices]
+
+        # 第二阶段: 精选 (复杂指标)
+        # 1. 信息理论指标
+        fine_entropy = -(coarse_attention * torch.log(coarse_attention + 1e-8)).sum(dim=-1)
+
+        # 2. KL散度 (与均匀分布的距离)
+        uniform_dist = torch.ones_like(coarse_attention) / N
+        kl_div = torch.nn.functional.kl_div(
+            torch.log(coarse_attention + 1e-8), uniform_dist, reduction='none'
+        ).sum(dim=-1)
+
+        # 3. 互补性 (与其他选中头的差异)
+        pairwise_distances = torch.cdist(coarse_attention, coarse_attention, p=2)
+        avg_distance = pairwise_distances.mean(dim=-1)
+
+        # 4. 稳定性指标
+        stability = 1 / (coarse_attention.std(dim=-1) + 1e-8)
+
+        # 归一化并组合所有指标
+        metrics = [fine_entropy, kl_div, avg_distance, stability]
+        normalized_metrics = []
+        for metric in metrics:
+            metric_norm = (metric - metric.min()) / (metric.max() - metric.min() + 1e-8)
+            normalized_metrics.append(metric_norm)
+
+        # 精选得分
+        weights = [0.3, 0.25, 0.25, 0.2]
+        fine_scores = sum(w * m for w, m in zip(weights, normalized_metrics))
+
+        # 获取最终选择
+        fine_indices = fine_scores.topk(k=self.H).indices
+        visual_head_index = coarse_indices[fine_indices]
+
+        return visual_head_index
+
     def forward(
         self,
         input_ids: torch.LongTensor = None,
@@ -307,6 +437,12 @@ class FineFastVLlamaModelAblationA(LlamaModel):
                             visual_head_index = self.head_selection_weighted_quality(image_attention)
                         elif current_strategy == 'gini_coefficient':
                             visual_head_index = self.head_selection_gini_coefficient(image_attention)
+                        elif current_strategy == 'multi_objective':
+                            visual_head_index = self.head_selection_multi_objective(image_attention)
+                        elif current_strategy == 'graph_based':
+                            visual_head_index = self.head_selection_graph_based(image_attention)
+                        elif current_strategy == 'hierarchical':
+                            visual_head_index = self.head_selection_hierarchical(image_attention)
                         else:
                             # 默认使用sum方法
                             visual_head_index = self.head_selection_sum(image_attention)

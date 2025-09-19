@@ -162,7 +162,8 @@ if __name__ == "__main__":
     parser.add_argument("--head-selection-strategy", type=str, default="sum",
                         choices=["sum", "variance", "entropy", "max_attention",
                                 "attention_range", "sparsity", "top_k_sum",
-                                "weighted_quality", "gini_coefficient"],
+                                "weighted_quality", "gini_coefficient",
+                                "multi_objective", "graph_based", "hierarchical"],
                         help="Head selection strategy for attention")
     args = parser.parse_args()
 
