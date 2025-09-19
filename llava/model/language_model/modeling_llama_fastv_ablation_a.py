@@ -286,25 +286,26 @@ class FineFastVLlamaModelAblationA(LlamaModel):
                         # 固定使用最后一个query token
                         image_attention = self.get_last_query_attention(last_attention)  # (H, N)
 
-                        # 根据策略选择注意力头
-                        print(f"🔧 Using head selection strategy: {self.head_selection_strategy}")
-                        if self.head_selection_strategy == 'sum':
+                        # 根据策略选择注意力头 - 动态读取config
+                        current_strategy = getattr(self.config, 'head_selection_strategy', self.head_selection_strategy)
+                        print(f"🔧 Using head selection strategy: {current_strategy}")
+                        if current_strategy == 'sum':
                             visual_head_index = self.head_selection_sum(image_attention)
-                        elif self.head_selection_strategy == 'variance':
+                        elif current_strategy == 'variance':
                             visual_head_index = self.head_selection_variance(image_attention)
-                        elif self.head_selection_strategy == 'entropy':
+                        elif current_strategy == 'entropy':
                             visual_head_index = self.head_selection_entropy(image_attention)
-                        elif self.head_selection_strategy == 'max_attention':
+                        elif current_strategy == 'max_attention':
                             visual_head_index = self.head_selection_max_attention(image_attention)
-                        elif self.head_selection_strategy == 'attention_range':
+                        elif current_strategy == 'attention_range':
                             visual_head_index = self.head_selection_attention_range(image_attention)
-                        elif self.head_selection_strategy == 'sparsity':
+                        elif current_strategy == 'sparsity':
                             visual_head_index = self.head_selection_sparsity(image_attention)
-                        elif self.head_selection_strategy == 'top_k_sum':
+                        elif current_strategy == 'top_k_sum':
                             visual_head_index = self.head_selection_top_k_sum(image_attention)
-                        elif self.head_selection_strategy == 'weighted_quality':
+                        elif current_strategy == 'weighted_quality':
                             visual_head_index = self.head_selection_weighted_quality(image_attention)
-                        elif self.head_selection_strategy == 'gini_coefficient':
+                        elif current_strategy == 'gini_coefficient':
                             visual_head_index = self.head_selection_gini_coefficient(image_attention)
                         else:
                             # 默认使用sum方法
