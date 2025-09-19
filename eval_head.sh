@@ -107,7 +107,7 @@ for TOKEN in "${TOKEN_NUMS[@]}"; do
                 --pruning_method ${METHOD} \
                 --visual_token_num ${TOKEN} \
                 --H ${HEAD} \
-                --head-selection-strategy ${STRATEGY} \
+                --head-selection-strategy ${strategy} \
                 --temperature 0 \
                 --conv-mode vicuna_v1 &
         done
