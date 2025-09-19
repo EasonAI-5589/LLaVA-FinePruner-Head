@@ -1,0 +1,78 @@
+Head策略消融研究评估结果
+评估时间: Fri 19 Sep 2025 06:35:53 PM CST
+方法: ablation_a
+测试Token数量: 192 128 64
+测试Head数量: 24 16 8
+测试策略: max_attention attention_range sparsity top_k_sum multi_objective graph_based hierarchical
+===============================================
+
+POPE评估结果:
+=============
+
+TOKEN=192, HEAD=24, STRATEGY=max_attention:
+Category: adversarial, # samples: 3000
+TP	FP	TN	FN	
+923	63	1437	577
+Accuracy: 0.7866666666666666
+Precision: 0.936105476673428
+Recall: 0.6153333333333333
+F1 score: 0.742558326629123
+Yes ratio: 0.32866666666666666
+0.743, 0.787, 0.936, 0.615, 0.329
+====================================
+Category: popular, # samples: 3000
+TP	FP	TN	FN	
+923	25	1475	577
+Accuracy: 0.7993333333333333
+Precision: 0.9736286919831224
+Recall: 0.6153333333333333
+F1 score: 0.7540849673202615
+Yes ratio: 0.316
+0.754, 0.799, 0.974, 0.615, 0.316
+====================================
+Category: random, # samples: 2910
+TP	FP	TN	FN	
+923	16	1394	577
+Accuracy: 0.7962199312714776
+Precision: 0.9829605963791267
+Recall: 0.6153333333333333
+F1 score: 0.7568675686756868
+Yes ratio: 0.32268041237113404
+0.757, 0.796, 0.983, 0.615, 0.323
+====================================
+Average F1 score: 0.7511702875416905
+----------------------------------------
+
+TOKEN=192, HEAD=24, STRATEGY=attention_range:
+Category: adversarial, # samples: 3000
+TP	FP	TN	FN	
+924	64	1436	576
+Accuracy: 0.7866666666666666
+Precision: 0.9352226720647774
+Recall: 0.616
+F1 score: 0.7427652733118971
+Yes ratio: 0.3293333333333333
+0.743, 0.787, 0.935, 0.616, 0.329
+====================================
+Category: popular, # samples: 3000
+TP	FP	TN	FN	
+924	25	1475	576
+Accuracy: 0.7996666666666666
+Precision: 0.9736564805057956
+Recall: 0.616
+F1 score: 0.754593711719069
+Yes ratio: 0.31633333333333336
+0.755, 0.800, 0.974, 0.616, 0.316
+====================================
+Category: random, # samples: 2910
+TP	FP	TN	FN	
+924	16	1394	576
+Accuracy: 0.7965635738831615
+Precision: 0.9829787234042553
+Recall: 0.616
+F1 score: 0.7573770491803278
+Yes ratio: 0.3230240549828179
+0.757, 0.797, 0.983, 0.616, 0.323
+====================================
+Average F1 score: 0.7515786780704312
+----------------------------------------
