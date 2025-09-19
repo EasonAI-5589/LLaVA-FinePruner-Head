@@ -67,6 +67,12 @@ class FineFastVLlamaModelAblationA(LlamaModel):
 
         # 消融研究A: 头筛选策略
         self.head_selection_strategy = getattr(config, 'head_selection_strategy', 'sum')
+        print(f"🔧 Ablation A initialized with head_selection_strategy: {self.head_selection_strategy}")
+
+    def update_head_selection_strategy(self, strategy):
+        """动态更新头筛选策略"""
+        self.head_selection_strategy = strategy
+        print(f"🔧 Updated head_selection_strategy to: {strategy}")
 
     def get_last_query_attention(self, last_attention):
         """固定使用最后一个query token的注意力"""
@@ -281,6 +287,7 @@ class FineFastVLlamaModelAblationA(LlamaModel):
                         image_attention = self.get_last_query_attention(last_attention)  # (H, N)
 
                         # 根据策略选择注意力头
+                        print(f"🔧 Using head selection strategy: {self.head_selection_strategy}")
                         if self.head_selection_strategy == 'sum':
                             visual_head_index = self.head_selection_sum(image_attention)
                         elif self.head_selection_strategy == 'variance':
