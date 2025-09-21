@@ -73,85 +73,208 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
 
         print(f"🔧 Dynamic Head Selection: strategy={self.head_selection_strategy}, enabled={self.enable_dynamic_selection}")
 
-    def select_heads_by_strategy(self, image_attention):
+    def adaptive_strategy_and_count_selection(self, image_attention):
         """
-        简化的头选择策略：基于配置的策略选择方法
+        基于预实验结果的自适应策略和头数量选择
 
-        Args:
-            image_attention: (H, N) - 每个head对visual tokens的attention
-
-        Returns:
-            visual_head_index: 选中的head索引
-            aggregated_attention: 聚合后的attention分布
+        根据token数量自适应选择最优策略，并动态确定头数量（支持非固定值）
         """
         H, N = image_attention.shape
 
-        if self.head_selection_strategy == 'sum':
-            # 原始FastV方法：选择attention总和最高的heads
-            head_scores = image_attention.sum(dim=-1)
+        # 第一步：基于token数量确定候选策略（基于预实验数据）
+        if self.R >= 166:  # 对应192 tokens
+            # 高资源场景：sparsity和hierarchical表现最佳
+            candidate_strategies = ['sparsity', 'hierarchical']
+            preferred_head_range = (14, 26)  # 扩展范围，支持非固定值
+        elif self.R >= 98:  # 对应128 tokens
+            # 中等资源场景：多策略混合
+            candidate_strategies = ['sparsity', 'hierarchical', 'top_k_sum', 'max_attention']
+            preferred_head_range = (8, 26)
+        else:  # 64 tokens及以下
+            # 低资源场景：graph_based表现最佳
+            candidate_strategies = ['graph_based', 'multi_objective', 'attention_range']
+            preferred_head_range = (6, 18)
 
-        elif self.head_selection_strategy == 'variance':
-            # 选择attention分布方差最大的heads (信息丰富度)
-            head_scores = image_attention.var(dim=-1)
+        # 第二步：评估每个候选策略的质量
+        strategy_results = {}
+        for strategy in candidate_strategies:
+            scores = self.compute_strategy_scores(image_attention, strategy)
+            optimal_count = self.determine_optimal_head_count(scores, preferred_head_range)
 
-        elif self.head_selection_strategy == 'entropy':
-            # 选择attention熵适中的heads
-            attention_probs = torch.softmax(image_attention, dim=-1)
-            entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
-            # 选择熵在中等范围的heads
-            mean_entropy = entropy.mean()
-            head_scores = -(entropy - mean_entropy).abs()
+            # 选择top heads
+            selected_indices = scores.topk(k=optimal_count).indices
+            selected_attention = image_attention[selected_indices]
 
-        elif self.head_selection_strategy == 'max_attention':
-            # 选择最大attention值最高的heads
-            head_scores = image_attention.max(dim=-1)[0]
+            # 评估这个组合的质量
+            quality_score = self.evaluate_combination_quality(selected_attention, scores[selected_indices])
 
-        elif self.head_selection_strategy == 'attention_range':
-            # 选择attention值范围最大的heads
-            head_scores = image_attention.max(dim=-1)[0] - image_attention.min(dim=-1)[0]
+            strategy_results[strategy] = {
+                'indices': selected_indices,
+                'count': optimal_count,
+                'quality': quality_score,
+                'scores': scores[selected_indices]
+            }
 
-        elif self.head_selection_strategy == 'sparsity':
-            # 选择稀疏性适中的heads
+        # 第三步：选择最优策略组合
+        best_strategy = max(strategy_results.keys(), key=lambda x: strategy_results[x]['quality'])
+        best_result = strategy_results[best_strategy]
+
+        # 第四步：聚合选中heads的attention
+        selected_attention = image_attention[best_result['indices']]
+        weights = torch.softmax(best_result['scores'], dim=0)
+        aggregated_attention = (selected_attention * weights.unsqueeze(-1)).sum(dim=0)
+
+        if self.debug_mode:
+            print(f"🎯 Adaptive selection: {best_result['count']} heads using {best_strategy} strategy")
+            print(f"   Quality score: {best_result['quality']:.3f}")
+
+        return best_result['indices'], aggregated_attention
+
+    def compute_strategy_scores(self, image_attention, strategy):
+        """计算特定策略的分数"""
+        H, N = image_attention.shape
+
+        if strategy == 'sparsity':
             attention_probs = torch.softmax(image_attention, dim=-1)
             sparsity = (attention_probs ** 2).sum(dim=-1)
-            head_scores = sparsity
+            max_weight = attention_probs.max(dim=-1)[0]
+            return 0.7 * sparsity + 0.3 * max_weight
 
-        elif self.head_selection_strategy == 'top_k_sum':
-            # 选择top-k attention总和最高的heads
+        elif strategy == 'hierarchical':
+            attention_probs = torch.softmax(image_attention, dim=-1)
+            sparsity = (attention_probs ** 2).sum(dim=-1)
+            entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
+            entropy_norm = (entropy - entropy.min()) / (entropy.max() - entropy.min() + 1e-8)
+            kl_div = F.kl_div(torch.log(attention_probs + 1e-8),
+                             torch.ones_like(attention_probs) / N,
+                             reduction='none').sum(dim=-1)
+            return 0.4 * sparsity + 0.3 * (1 - entropy_norm) + 0.3 * kl_div
+
+        elif strategy == 'graph_based':
+            if H <= 1:
+                return image_attention.sum(dim=-1)
+            normalized = F.normalize(image_attention, p=2, dim=-1)
+            similarity = torch.mm(normalized, normalized.t())
+            centrality = similarity.sum(dim=-1)
+            quality = image_attention.var(dim=-1)
+            return 0.6 * centrality + 0.4 * quality
+
+        elif strategy == 'top_k_sum':
             k = min(64, N // 4)
             topk_attention = image_attention.topk(k=k, dim=-1)[0]
-            head_scores = topk_attention.sum(dim=-1)
+            return topk_attention.sum(dim=-1)
 
-        elif self.head_selection_strategy == 'weighted_quality':
-            # 结合峰值和方差的质量分数
-            max_attn = image_attention.max(dim=-1)[0]
-            var_attn = image_attention.var(dim=-1)
-            head_scores = max_attn * var_attn
+        elif strategy == 'max_attention':
+            return image_attention.max(dim=-1)[0]
 
-        elif self.head_selection_strategy == 'gini_coefficient':
-            # 基于基尼系数选择heads
-            sorted_attn = torch.sort(image_attention, dim=-1)[0]
-            n = sorted_attn.shape[-1]
-            index = torch.arange(1, n + 1, device=sorted_attn.device).float()
-            gini = (2 * (sorted_attn * index).sum(dim=-1)) / (n * sorted_attn.sum(dim=-1)) - (n + 1) / n
-            head_scores = gini
+        elif strategy == 'attention_range':
+            return image_attention.max(dim=-1)[0] - image_attention.min(dim=-1)[0]
+
+        elif strategy == 'multi_objective':
+            attention_probs = torch.softmax(image_attention, dim=-1)
+            entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
+            sparsity = (attention_probs ** 2).sum(dim=-1)
+            max_attn = attention_probs.max(dim=-1)[0]
+
+            # 归一化并组合
+            entropy_norm = (entropy - entropy.min()) / (entropy.max() - entropy.min() + 1e-8)
+            sparsity_norm = (sparsity - sparsity.min()) / (sparsity.max() - sparsity.min() + 1e-8)
+            max_norm = (max_attn - max_attn.min()) / (max_attn.max() - max_attn.min() + 1e-8)
+            return 0.4 * entropy_norm + 0.3 * sparsity_norm + 0.3 * max_norm
 
         else:
-            # 默认使用sum策略
-            head_scores = image_attention.sum(dim=-1)
+            return image_attention.sum(dim=-1)
 
-        # 选择top-H heads
-        visual_head_index = head_scores.topk(k=self.H).indices
+    def determine_optimal_head_count(self, scores, preferred_range):
+        """
+        动态确定最优头数量，支持非传统固定值
+        """
+        min_heads, max_heads = preferred_range
 
-        # 聚合选中heads的attention - 使用加权平均
-        selected_attention = image_attention[visual_head_index]  # (H, N)
-        selected_scores = head_scores[visual_head_index]  # (H,)
+        # 方法1: 基于分数分布的拐点检测
+        sorted_scores, _ = torch.sort(scores, descending=True)
 
-        # 计算权重 (归一化后的分数)
-        weights = torch.softmax(selected_scores, dim=0)  # (H,)
-        aggregated_attention = (selected_attention * weights.unsqueeze(-1)).sum(dim=0)  # (N,)
+        if len(sorted_scores) > 3:
+            # 计算相邻分数的差值
+            gaps = sorted_scores[:-1] - sorted_scores[1:]
 
-        return visual_head_index, aggregated_attention
+            # 寻找显著的质量下降点
+            mean_gap = gaps.mean()
+            std_gap = gaps.std()
+            significant_gaps = gaps > (mean_gap + 0.8 * std_gap)
+
+            if significant_gaps.any():
+                # 找到第一个显著gap的位置
+                first_gap_idx = significant_gaps.nonzero()[0].item()
+                gap_based_count = first_gap_idx + 1
+            else:
+                gap_based_count = max_heads
+        else:
+            gap_based_count = len(sorted_scores)
+
+        # 方法2: 基于质量阈值的筛选
+        mean_score = sorted_scores.mean()
+        std_score = sorted_scores.std()
+        quality_threshold = mean_score - 0.3 * std_score  # 更宽松的阈值
+
+        quality_based_count = (sorted_scores > quality_threshold).sum().item()
+
+        # 方法3: 基于累积贡献度
+        if len(sorted_scores) > 1:
+            normalized_scores = sorted_scores / sorted_scores.sum()
+            cumulative_contribution = torch.cumsum(normalized_scores, dim=0)
+            # 找到累积贡献达到85%的点
+            contribution_based_count = (cumulative_contribution <= 0.85).sum().item() + 1
+        else:
+            contribution_based_count = 1
+
+        # 综合决策：取三种方法的中位数，确保在合理范围内
+        candidates = [gap_based_count, quality_based_count, contribution_based_count]
+        optimal_count = sorted(candidates)[1]  # 中位数
+
+        # 确保在preferred_range范围内
+        optimal_count = max(min_heads, min(optimal_count, max_heads))
+
+        # 确保不超过可用头数
+        optimal_count = min(optimal_count, len(scores))
+
+        return optimal_count
+
+    def evaluate_combination_quality(self, selected_attention, selected_scores):
+        """
+        评估头选择组合的整体质量
+        """
+        if len(selected_attention) == 0:
+            return 0.0
+
+        # 质量指标1: 多样性 - 选中heads之间的差异性
+        if len(selected_attention) > 1:
+            normalized = F.normalize(selected_attention, p=2, dim=-1)
+            similarity_matrix = torch.mm(normalized, normalized.t())
+            mask = ~torch.eye(similarity_matrix.size(0), dtype=torch.bool, device=similarity_matrix.device)
+            avg_similarity = similarity_matrix[mask].mean()
+            diversity = 1 - avg_similarity
+        else:
+            diversity = 0.5
+
+        # 质量指标2: 分数分布的合理性
+        score_std = selected_scores.std()
+        score_range = selected_scores.max() - selected_scores.min()
+        score_quality = (score_std + score_range) / 2
+
+        # 质量指标3: 注意力分布的有效性
+        attention_variance = selected_attention.var(dim=-1).mean()
+        attention_max = selected_attention.max(dim=-1)[0].mean()
+        attention_quality = attention_variance * attention_max
+
+        # 综合质量评分
+        overall_quality = (
+            0.3 * diversity +
+            0.3 * score_quality +
+            0.4 * attention_quality
+        )
+
+        return overall_quality.item()
 
     # ================== Forward函数 - 简化版本 ==================
 
@@ -272,9 +395,9 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
                         # 简化的attention获取：使用最后一个token对visual tokens的attention
                         image_attention = last_attention[0, :, -1, self.system_prompt_length:self.system_prompt_length+self.visual_token_length]
 
-                        # 使用简化的头选择策略
+                        # 使用基于预实验数据的自适应选择策略
                         if self.enable_dynamic_selection:
-                            visual_head_index, aggregated_attention = self.select_heads_by_strategy(image_attention)
+                            visual_head_index, aggregated_attention = self.adaptive_strategy_and_count_selection(image_attention)
                         else:
                             # Fallback to simple sum selection
                             head_attention = image_attention.sum(dim=-1)
