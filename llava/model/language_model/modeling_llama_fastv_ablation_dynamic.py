@@ -180,6 +180,17 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
             print(f"🎯 Intelligent Consensus-Diversity: {len(final_indices)} heads")
             print(f"   Consensus: {len(consensus_heads)} | Diversity: {len(diversity_heads)}")
             print(f"   Dynamic threshold: {dynamic_threshold:.3f} | Complexity: {attention_complexity:.3f}")
+            print(f"   Strategy qualities: {[(s, f'{r['quality']:.3f}') for s, r in strategy_selections.items()]}")
+            print(f"   Selected consensus heads: {consensus_heads}")
+            print(f"   Selected diversity heads: {diversity_heads}")
+            print(f"   Final head indices: {final_indices.tolist()}")
+
+            # 对比简单策略的效果
+            simple_sparsity_scores = self.compute_strategy_scores(image_attention, 'sparsity')
+            simple_sparsity_heads = simple_sparsity_scores.topk(k=16).indices.tolist()
+            print(f"   [COMPARISON] Simple sparsity top-16: {simple_sparsity_heads}")
+            print(f"   [COMPARISON] Our selection: {final_indices.tolist()}")
+            print(f"   [COMPARISON] Overlap: {len(set(simple_sparsity_heads) & set(final_indices.tolist()))}/16 heads")
 
         return final_indices, aggregated_attention
 

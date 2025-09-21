@@ -101,6 +101,12 @@ def eval_model(args):
     if hasattr(args, 'max_heads'):
         model.config.max_heads = args.max_heads
 
+    # 添加debug模式支持
+    import os
+    if os.getenv('LLAVA_DEBUG_MODE') == 'true' or getattr(args, 'debug_mode', False):
+        model.config.debug_mode = True
+        print("🐛 Debug mode enabled for intelligent consensus-diversity strategy")
+
     # Data
     questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
     questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
@@ -181,6 +187,8 @@ if __name__ == "__main__":
                         help="Minimum number of heads for dynamic selection")
     parser.add_argument("--max-heads", type=int, default=24,
                         help="Maximum number of heads for dynamic selection")
+    parser.add_argument("--debug-mode", action="store_true", default=False,
+                        help="Enable debug mode for detailed strategy analysis")
     args = parser.parse_args()
 
     eval_model(args)
