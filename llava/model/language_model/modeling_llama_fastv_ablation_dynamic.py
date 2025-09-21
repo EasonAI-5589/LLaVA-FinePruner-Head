@@ -85,9 +85,8 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
         """
         H, N = image_attention.shape
 
-        # 所有候选策略
-        all_strategies = ['sum', 'sparsity', 'hierarchical', 'graph_based',
-                         'top_k_sum', 'max_attention', 'attention_range', 'multi_objective']
+        # 方案1: 简化版本 - 只使用验证过的高效策略
+        all_strategies = ['sparsity', 'hierarchical', 'attention_range']
 
         # === 第一步：策略质量评估和自适应选择 ===
         strategy_selections = {}
@@ -253,18 +252,18 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
 
     def adaptive_consensus_threshold(self, consistency, num_strategies):
         """
-        根据策略一致性动态调整共识阈值
+        方案2: 调整共识阈值 - 降低阈值让更多头成为共识头
         """
-        # 基础阈值
-        base_threshold = 1.0 / 3.0
+        # 降低基础阈值，从1/3降到1/4
+        base_threshold = 1.0 / 4.0
 
-        # 高一致性时提高阈值，低一致性时降低阈值
+        # 放宽阈值调整范围，更容易达成共识
         if consistency > 0.6:
-            return min(0.5, base_threshold * (1 + consistency))
+            return min(0.4, base_threshold * (1 + consistency * 0.8))  # 降低上限
         elif consistency < 0.2:
-            return max(0.15, base_threshold * consistency * 2)
+            return max(0.1, base_threshold * consistency * 1.5)  # 降低最小阈值
         else:
-            return base_threshold
+            return base_threshold * 0.9  # 整体降低10%
 
     def compute_attention_complexity(self, image_attention):
         """
