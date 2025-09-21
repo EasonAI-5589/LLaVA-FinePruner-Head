@@ -91,21 +91,18 @@ def eval_model(args):
     
     # 添加多头注意力超参数
     model.config.H=args.H
-    model.config.head_selection_strategy=args.head_selection_strategy
+    model.config.head_selection_strategy=getattr(args, 'head_selection_strategy', 'sum')
 
     # 添加动态选择超参数
-    if hasattr(args, 'enable_dynamic_selection'):
-        model.config.enable_dynamic_selection = args.enable_dynamic_selection
-    if hasattr(args, 'min_heads'):
-        model.config.min_heads = args.min_heads
-    if hasattr(args, 'max_heads'):
-        model.config.max_heads = args.max_heads
+    model.config.enable_dynamic_selection = getattr(args, 'enable_dynamic_selection', False)
 
     # 添加debug模式支持
     import os
     if os.getenv('LLAVA_DEBUG_MODE') == 'true' or getattr(args, 'debug_mode', False):
         model.config.debug_mode = True
         print("🐛 Debug mode enabled for intelligent consensus-diversity strategy")
+    else:
+        model.config.debug_mode = False
 
     # Data
     questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
@@ -182,11 +179,7 @@ if __name__ == "__main__":
 
     # 动态选择参数
     parser.add_argument("--enable-dynamic-selection", action="store_true", default=False,
-                        help="Enable dynamic head selection")
-    parser.add_argument("--min-heads", type=int, default=6,
-                        help="Minimum number of heads for dynamic selection")
-    parser.add_argument("--max-heads", type=int, default=24,
-                        help="Maximum number of heads for dynamic selection")
+                        help="Enable intelligent consensus-diversity dynamic head selection")
     parser.add_argument("--debug-mode", action="store_true", default=False,
                         help="Enable debug mode for detailed strategy analysis")
     args = parser.parse_args()

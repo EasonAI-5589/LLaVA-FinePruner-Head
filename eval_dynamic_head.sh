@@ -79,7 +79,7 @@ WORK_DIR="/mnt/bn/bes-nas-zqz-lq-v6arnold6/mlx/users/zhangqizhe/code/VTP/LLaVA-F
 CKPT_DIR="/mnt/bn/bes-mllm-shared/checkpoint/LLaVA"
 DATA_DIR="/mnt/bn/bes-mllm-shared/data/LLaVA/LLaVA-Eval"
 CKPT="llava-v1.5-7b"
-METHOD="ablation_a"
+METHOD="dynamic_head"
 
 echo "切换到工作目录: ${WORK_DIR}"
 cd "${WORK_DIR}" || { echo "❌ 错误: 无法切换到工作目录"; exit 1; }
@@ -122,9 +122,8 @@ run_intelligent_consensus_diversity() {
     # 如果启用调试模式，添加debug配置
     if [ "$ENABLE_DEBUG" = "true" ]; then
         echo "🐛 启用调试模式"
-        # 注意: debug_mode需要在代码中通过config设置
-        # 这里我们通过环境变量传递
         export LLAVA_DEBUG_MODE=true
+        base_args+=(--debug-mode)
     fi
 
     case $dataset in
