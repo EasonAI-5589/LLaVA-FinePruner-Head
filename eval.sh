@@ -1,49 +1,48 @@
-cd# LLaVA Baseline
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/vqav2.sh vanilla 576
+#!/bin/bash
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/gqa.sh vanilla 576
+echo "🚀 开始完整的模型评估流程"
+echo "评估顺序: FastV -> SparseVLM -> PDrop"
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/vizwiz.sh vanilla 576
+# ========== FastV 完整评估 ==========
+echo "📊 1. 开始 FastV 完整评估"
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/sqa.sh vanilla 576
+# FastV 不同token数量评估
+for task in vqav2 gqa vizwiz sqa textvqa pope mme mmbench mmbench_cn mmvet; do
+    for token in 192 128 64; do
+        echo "运行 FastV ${task} ${token} tokens"
+        CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/${task}.sh fastv $token
+    done
+done
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/textvqa.sh vanilla 576
+echo "✅ FastV 完整评估完成"
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/pope.sh vanilla 576
+# ========== SparseVLM 完整评估 ==========
+echo "📊 2. 开始 SparseVLM 完整评估"
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mme.sh vanilla 576
+for task in vqav2 gqa vizwiz sqa textvqa pope mme mmbench mmbench_cn mmvet; do
+    for token in 192 128 64; do
+        echo "运行 SparseVLM ${task} ${token} tokens"
+        CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/${task}.sh sparsevlm $token
+    done
+done
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mmbench.sh vanilla 576
+echo "✅ SparseVLM 完整评估完成"
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mmbench_cn.sh vanilla 576
+# ========== PDrop 完整评估 ==========
+echo "📊 3. 开始 PDrop 完整评估"
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mmvet.sh vanilla 576
+for task in vqav2 gqa vizwiz sqa textvqa pope mme mmbench mmbench_cn mmvet; do
+    for token in 192 128 64; do
+        echo "运行 PDrop ${task} ${token} tokens"
+        CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/${task}.sh pdrop $token
+    done
+done
 
-# FastV
+echo "✅ PDrop 完整评估完成"
 
+echo "🎉 所有模型评估完成!"
 
-
-# FastV+Finepruner
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/vqav2.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/vizwiz.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mme.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/pope.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/textvqa.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/sqa.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/gqa.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mmbench.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mmbench_cn.sh fastv+finepruner 192
-
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/7b/mmvet.sh fastv+finepruner 192
+# ==================== 原有脚本内容 ====================
 
 for task in pope mme vqav2 vizwiz sqa textvqa gqa mmbench mmbench_cn mmvet; do
     for token in 128 64; do
