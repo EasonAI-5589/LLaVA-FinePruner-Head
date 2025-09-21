@@ -71,7 +71,6 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
         self.enable_dynamic_selection = getattr(config, 'enable_dynamic_selection', True)
         self.debug_mode = getattr(config, 'debug_mode', False)
 
-        print(f"🔧 Dynamic Head Selection: strategy={self.head_selection_strategy}, enabled={self.enable_dynamic_selection}")
 
     def consensus_diversity_selection(self, image_attention):
         """
