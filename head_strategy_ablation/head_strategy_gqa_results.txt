@@ -1,0 +1,4313 @@
+Head策略GQA评估结果
+评估时间: Sat 20 Sep 2025 09:58:49 PM CST
+方法: ablation_a
+测试Token数量: 192 128 64
+测试Head数量: 24 16 8
+测试策略: max_attention attention_range sparsity top_k_sum multi_objective graph_based hierarchical
+=============================================
+
+
+TOKEN=192, HEAD=24, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.22%
+Open: 42.20%
+Accuracy: 56.90%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.68 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.30% (1129 questions)
+  compare: 64.18% (589 questions)
+  logical: 72.27% (1803 questions)
+  query: 42.20% (6805 questions)
+  verify: 76.38% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.84% (5186 questions)
+  cat: 47.95% (1149 questions)
+  global: 61.15% (157 questions)
+  obj: 84.06% (778 questions)
+  rel: 48.93% (5308 questions)
+
+Accuracy / steps number:
+  1: 71.31% (237 questions)
+  2: 51.10% (6395 questions)
+  3: 60.38% (4266 questions)
+  4: 62.17% (793 questions)
+  5: 72.02% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.07% (151 questions)
+  4: 53.49% (630 questions)
+  5: 43.26% (1290 questions)
+  6: 53.09% (2074 questions)
+  7: 55.48% (1642 questions)
+  8: 60.00% (1185 questions)
+  9: 61.90% (1281 questions)
+  10: 62.29% (1249 questions)
+  11: 58.85% (994 questions)
+  12: 64.58% (638 questions)
+  13: 59.74% (462 questions)
+  14: 65.22% (345 questions)
+  15: 60.34% (237 questions)
+  16: 67.52% (117 questions)
+  17: 61.70% (94 questions)
+  18: 73.68% (76 questions)
+  19: 72.09% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=24, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.26%
+Open: 42.41%
+Accuracy: 57.03%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.67 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.30% (1129 questions)
+  compare: 64.52% (589 questions)
+  logical: 72.27% (1803 questions)
+  query: 42.41% (6805 questions)
+  verify: 76.38% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.92% (5186 questions)
+  cat: 48.13% (1149 questions)
+  global: 61.78% (157 questions)
+  obj: 84.06% (778 questions)
+  rel: 49.10% (5308 questions)
+
+Accuracy / steps number:
+  1: 72.15% (237 questions)
+  2: 51.23% (6395 questions)
+  3: 60.53% (4266 questions)
+  4: 62.17% (793 questions)
+  5: 72.02% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 38.41% (151 questions)
+  4: 53.65% (630 questions)
+  5: 43.26% (1290 questions)
+  6: 53.42% (2074 questions)
+  7: 55.79% (1642 questions)
+  8: 60.08% (1185 questions)
+  9: 61.98% (1281 questions)
+  10: 62.37% (1249 questions)
+  11: 58.95% (994 questions)
+  12: 64.42% (638 questions)
+  13: 59.96% (462 questions)
+  14: 65.22% (345 questions)
+  15: 60.76% (237 questions)
+  16: 67.52% (117 questions)
+  17: 61.70% (94 questions)
+  18: 73.68% (76 questions)
+  19: 69.77% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=24, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 75.07%
+Open: 42.60%
+Accuracy: 57.51%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.64 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.74% (1129 questions)
+  compare: 65.20% (589 questions)
+  logical: 72.66% (1803 questions)
+  query: 42.60% (6805 questions)
+  verify: 77.75% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.44% (5186 questions)
+  cat: 48.30% (1149 questions)
+  global: 62.42% (157 questions)
+  obj: 85.48% (778 questions)
+  rel: 49.45% (5308 questions)
+
+Accuracy / steps number:
+  1: 73.00% (237 questions)
+  2: 51.81% (6395 questions)
+  3: 60.88% (4266 questions)
+  4: 62.42% (793 questions)
+  5: 72.51% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.75% (151 questions)
+  4: 53.97% (630 questions)
+  5: 44.65% (1290 questions)
+  6: 53.47% (2074 questions)
+  7: 56.58% (1642 questions)
+  8: 60.42% (1185 questions)
+  9: 62.53% (1281 questions)
+  10: 62.85% (1249 questions)
+  11: 59.36% (994 questions)
+  12: 65.05% (638 questions)
+  13: 59.09% (462 questions)
+  14: 64.35% (345 questions)
+  15: 61.18% (237 questions)
+  16: 70.94% (117 questions)
+  17: 62.77% (94 questions)
+  18: 76.32% (76 questions)
+  19: 67.44% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=24, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.38%
+Open: 42.25%
+Accuracy: 57.00%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.68 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.12% (1129 questions)
+  compare: 64.52% (589 questions)
+  logical: 72.38% (1803 questions)
+  query: 42.25% (6805 questions)
+  verify: 76.69% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.88% (5186 questions)
+  cat: 48.13% (1149 questions)
+  global: 62.42% (157 questions)
+  obj: 84.19% (778 questions)
+  rel: 49.02% (5308 questions)
+
+Accuracy / steps number:
+  1: 73.00% (237 questions)
+  2: 51.23% (6395 questions)
+  3: 60.31% (4266 questions)
+  4: 62.04% (793 questions)
+  5: 72.51% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.07% (151 questions)
+  4: 53.81% (630 questions)
+  5: 43.26% (1290 questions)
+  6: 53.13% (2074 questions)
+  7: 55.42% (1642 questions)
+  8: 60.25% (1185 questions)
+  9: 61.90% (1281 questions)
+  10: 62.69% (1249 questions)
+  11: 58.65% (994 questions)
+  12: 64.89% (638 questions)
+  13: 60.17% (462 questions)
+  14: 65.51% (345 questions)
+  15: 59.92% (237 questions)
+  16: 67.52% (117 questions)
+  17: 61.70% (94 questions)
+  18: 73.68% (76 questions)
+  19: 72.09% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=24, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.35%
+Open: 42.31%
+Accuracy: 57.01%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.70 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.57% (1129 questions)
+  compare: 63.84% (589 questions)
+  logical: 71.94% (1803 questions)
+  query: 42.31% (6805 questions)
+  verify: 76.91% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.88% (5186 questions)
+  cat: 47.69% (1149 questions)
+  global: 62.42% (157 questions)
+  obj: 84.06% (778 questions)
+  rel: 49.17% (5308 questions)
+
+Accuracy / steps number:
+  1: 72.57% (237 questions)
+  2: 51.18% (6395 questions)
+  3: 60.67% (4266 questions)
+  4: 61.92% (793 questions)
+  5: 71.41% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.07% (151 questions)
+  4: 53.81% (630 questions)
+  5: 43.57% (1290 questions)
+  6: 52.36% (2074 questions)
+  7: 55.72% (1642 questions)
+  8: 59.83% (1185 questions)
+  9: 62.22% (1281 questions)
+  10: 62.29% (1249 questions)
+  11: 59.46% (994 questions)
+  12: 65.20% (638 questions)
+  13: 59.52% (462 questions)
+  14: 65.22% (345 questions)
+  15: 62.03% (237 questions)
+  16: 69.23% (117 questions)
+  17: 62.77% (94 questions)
+  18: 71.05% (76 questions)
+  19: 72.09% (43 questions)
+  20: 71.88% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=24, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.55%
+Open: 42.42%
+Accuracy: 57.17%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.64 (lower is better)
+
+Accuracy / structural type:
+  choose: 79.36% (1129 questions)
+  compare: 64.18% (589 questions)
+  logical: 71.99% (1803 questions)
+  query: 42.42% (6805 questions)
+  verify: 76.91% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.02% (5186 questions)
+  cat: 48.74% (1149 questions)
+  global: 62.42% (157 questions)
+  obj: 83.55% (778 questions)
+  rel: 49.27% (5308 questions)
+
+Accuracy / steps number:
+  1: 72.57% (237 questions)
+  2: 51.57% (6395 questions)
+  3: 60.41% (4266 questions)
+  4: 62.04% (793 questions)
+  5: 72.26% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.75% (151 questions)
+  4: 53.17% (630 questions)
+  5: 43.64% (1290 questions)
+  6: 53.86% (2074 questions)
+  7: 56.03% (1642 questions)
+  8: 60.00% (1185 questions)
+  9: 61.67% (1281 questions)
+  10: 62.61% (1249 questions)
+  11: 58.35% (994 questions)
+  12: 65.20% (638 questions)
+  13: 60.17% (462 questions)
+  14: 65.22% (345 questions)
+  15: 61.18% (237 questions)
+  16: 68.38% (117 questions)
+  17: 64.89% (94 questions)
+  18: 72.37% (76 questions)
+  19: 72.09% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=24, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.29%
+Open: 42.47%
+Accuracy: 57.08%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.69 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.57% (1129 questions)
+  compare: 64.18% (589 questions)
+  logical: 72.16% (1803 questions)
+  query: 42.47% (6805 questions)
+  verify: 76.51% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.75% (5186 questions)
+  cat: 48.39% (1149 questions)
+  global: 61.78% (157 questions)
+  obj: 83.93% (778 questions)
+  rel: 49.34% (5308 questions)
+
+Accuracy / steps number:
+  1: 72.57% (237 questions)
+  2: 51.49% (6395 questions)
+  3: 60.29% (4266 questions)
+  4: 62.80% (793 questions)
+  5: 71.29% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.07% (151 questions)
+  4: 54.29% (630 questions)
+  5: 43.95% (1290 questions)
+  6: 53.28% (2074 questions)
+  7: 55.79% (1642 questions)
+  8: 59.32% (1185 questions)
+  9: 61.51% (1281 questions)
+  10: 62.69% (1249 questions)
+  11: 58.45% (994 questions)
+  12: 65.05% (638 questions)
+  13: 60.61% (462 questions)
+  14: 65.22% (345 questions)
+  15: 60.34% (237 questions)
+  16: 67.52% (117 questions)
+  17: 63.83% (94 questions)
+  18: 73.68% (76 questions)
+  19: 69.77% (43 questions)
+  20: 71.88% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=16, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 75.06%
+Open: 42.88%
+Accuracy: 57.65%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.63 (lower is better)
+
+Accuracy / structural type:
+  choose: 79.27% (1129 questions)
+  compare: 64.86% (589 questions)
+  logical: 72.38% (1803 questions)
+  query: 42.88% (6805 questions)
+  verify: 77.75% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.17% (5186 questions)
+  cat: 49.35% (1149 questions)
+  global: 61.78% (157 questions)
+  obj: 84.19% (778 questions)
+  rel: 50.04% (5308 questions)
+
+Accuracy / steps number:
+  1: 75.11% (237 questions)
+  2: 52.04% (6395 questions)
+  3: 60.83% (4266 questions)
+  4: 62.80% (793 questions)
+  5: 72.38% (822 questions)
+  6: 80.49% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.74% (151 questions)
+  4: 54.13% (630 questions)
+  5: 44.34% (1290 questions)
+  6: 53.86% (2074 questions)
+  7: 56.52% (1642 questions)
+  8: 59.32% (1185 questions)
+  9: 61.75% (1281 questions)
+  10: 63.09% (1249 questions)
+  11: 58.95% (994 questions)
+  12: 66.30% (638 questions)
+  13: 62.55% (462 questions)
+  14: 65.80% (345 questions)
+  15: 62.87% (237 questions)
+  16: 70.94% (117 questions)
+  17: 64.89% (94 questions)
+  18: 73.68% (76 questions)
+  19: 72.09% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=16, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 75.04%
+Open: 42.88%
+Accuracy: 57.64%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.63 (lower is better)
+
+Accuracy / structural type:
+  choose: 79.27% (1129 questions)
+  compare: 65.03% (589 questions)
+  logical: 72.32% (1803 questions)
+  query: 42.88% (6805 questions)
+  verify: 77.71% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.21% (5186 questions)
+  cat: 49.43% (1149 questions)
+  global: 61.78% (157 questions)
+  obj: 84.06% (778 questions)
+  rel: 49.98% (5308 questions)
+
+Accuracy / steps number:
+  1: 75.11% (237 questions)
+  2: 52.04% (6395 questions)
+  3: 60.81% (4266 questions)
+  4: 62.93% (793 questions)
+  5: 72.26% (822 questions)
+  6: 80.49% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.74% (151 questions)
+  4: 54.44% (630 questions)
+  5: 43.95% (1290 questions)
+  6: 53.95% (2074 questions)
+  7: 56.33% (1642 questions)
+  8: 59.49% (1185 questions)
+  9: 61.90% (1281 questions)
+  10: 63.09% (1249 questions)
+  11: 59.05% (994 questions)
+  12: 66.30% (638 questions)
+  13: 62.34% (462 questions)
+  14: 65.51% (345 questions)
+  15: 62.87% (237 questions)
+  16: 70.94% (117 questions)
+  17: 64.89% (94 questions)
+  18: 73.68% (76 questions)
+  19: 72.09% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=16, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.94%
+Open: 42.84%
+Accuracy: 57.57%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.61 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.74% (1129 questions)
+  compare: 64.01% (589 questions)
+  logical: 72.32% (1803 questions)
+  query: 42.84% (6805 questions)
+  verify: 77.98% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.13% (5186 questions)
+  cat: 49.09% (1149 questions)
+  global: 63.69% (157 questions)
+  obj: 84.70% (778 questions)
+  rel: 49.81% (5308 questions)
+
+Accuracy / steps number:
+  1: 74.68% (237 questions)
+  2: 52.01% (6395 questions)
+  3: 60.64% (4266 questions)
+  4: 62.30% (793 questions)
+  5: 72.75% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.74% (151 questions)
+  4: 53.97% (630 questions)
+  5: 44.26% (1290 questions)
+  6: 53.57% (2074 questions)
+  7: 57.31% (1642 questions)
+  8: 60.25% (1185 questions)
+  9: 62.61% (1281 questions)
+  10: 62.93% (1249 questions)
+  11: 58.65% (994 questions)
+  12: 64.89% (638 questions)
+  13: 61.26% (462 questions)
+  14: 62.90% (345 questions)
+  15: 61.18% (237 questions)
+  16: 68.38% (117 questions)
+  17: 64.89% (94 questions)
+  18: 76.32% (76 questions)
+  19: 67.44% (43 questions)
+  20: 75.00% (32 questions)
+  21: 63.16% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=16, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.43%
+Open: 42.70%
+Accuracy: 57.27%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.63 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.65% (1129 questions)
+  compare: 64.52% (589 questions)
+  logical: 72.10% (1803 questions)
+  query: 42.70% (6805 questions)
+  verify: 76.78% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.67% (5186 questions)
+  cat: 48.13% (1149 questions)
+  global: 61.78% (157 questions)
+  obj: 84.19% (778 questions)
+  rel: 49.89% (5308 questions)
+
+Accuracy / steps number:
+  1: 74.26% (237 questions)
+  2: 51.60% (6395 questions)
+  3: 60.53% (4266 questions)
+  4: 62.55% (793 questions)
+  5: 71.90% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 38.41% (151 questions)
+  4: 53.65% (630 questions)
+  5: 43.95% (1290 questions)
+  6: 53.38% (2074 questions)
+  7: 56.15% (1642 questions)
+  8: 59.24% (1185 questions)
+  9: 61.75% (1281 questions)
+  10: 63.33% (1249 questions)
+  11: 59.05% (994 questions)
+  12: 65.05% (638 questions)
+  13: 61.90% (462 questions)
+  14: 63.48% (345 questions)
+  15: 61.18% (237 questions)
+  16: 70.09% (117 questions)
+  17: 63.83% (94 questions)
+  18: 73.68% (76 questions)
+  19: 72.09% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=16, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 73.97%
+Open: 41.59%
+Accuracy: 56.45%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.67 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.48% (1129 questions)
+  compare: 63.67% (589 questions)
+  logical: 71.55% (1803 questions)
+  query: 41.59% (6805 questions)
+  verify: 76.33% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.61% (5186 questions)
+  cat: 47.17% (1149 questions)
+  global: 60.51% (157 questions)
+  obj: 83.68% (778 questions)
+  rel: 48.32% (5308 questions)
+
+Accuracy / steps number:
+  1: 71.31% (237 questions)
+  2: 50.52% (6395 questions)
+  3: 60.08% (4266 questions)
+  4: 61.16% (793 questions)
+  5: 72.14% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 35.76% (151 questions)
+  4: 51.90% (630 questions)
+  5: 43.02% (1290 questions)
+  6: 52.27% (2074 questions)
+  7: 55.54% (1642 questions)
+  8: 58.73% (1185 questions)
+  9: 62.14% (1281 questions)
+  10: 62.05% (1249 questions)
+  11: 58.55% (994 questions)
+  12: 65.52% (638 questions)
+  13: 59.09% (462 questions)
+  14: 62.61% (345 questions)
+  15: 61.18% (237 questions)
+  16: 67.52% (117 questions)
+  17: 60.64% (94 questions)
+  18: 72.37% (76 questions)
+  19: 72.09% (43 questions)
+  20: 68.75% (32 questions)
+  21: 63.16% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=16, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.78%
+Open: 42.44%
+Accuracy: 57.28%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.62 (lower is better)
+
+Accuracy / structural type:
+  choose: 79.45% (1129 questions)
+  compare: 64.69% (589 questions)
+  logical: 72.21% (1803 questions)
+  query: 42.44% (6805 questions)
+  verify: 77.13% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.15% (5186 questions)
+  cat: 49.09% (1149 questions)
+  global: 61.15% (157 questions)
+  obj: 83.93% (778 questions)
+  rel: 49.30% (5308 questions)
+
+Accuracy / steps number:
+  1: 72.57% (237 questions)
+  2: 51.68% (6395 questions)
+  3: 60.55% (4266 questions)
+  4: 62.30% (793 questions)
+  5: 72.02% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 38.41% (151 questions)
+  4: 53.97% (630 questions)
+  5: 43.64% (1290 questions)
+  6: 53.71% (2074 questions)
+  7: 56.39% (1642 questions)
+  8: 59.66% (1185 questions)
+  9: 62.22% (1281 questions)
+  10: 62.53% (1249 questions)
+  11: 58.65% (994 questions)
+  12: 65.67% (638 questions)
+  13: 59.52% (462 questions)
+  14: 65.51% (345 questions)
+  15: 61.18% (237 questions)
+  16: 67.52% (117 questions)
+  17: 63.83% (94 questions)
+  18: 72.37% (76 questions)
+  19: 72.09% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=16, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 75.26%
+Open: 42.94%
+Accuracy: 57.78%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.60 (lower is better)
+
+Accuracy / structural type:
+  choose: 79.63% (1129 questions)
+  compare: 65.20% (589 questions)
+  logical: 72.77% (1803 questions)
+  query: 42.94% (6805 questions)
+  verify: 77.71% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.73% (5186 questions)
+  cat: 48.65% (1149 questions)
+  global: 62.42% (157 questions)
+  obj: 84.58% (778 questions)
+  rel: 49.87% (5308 questions)
+
+Accuracy / steps number:
+  1: 73.84% (237 questions)
+  2: 52.28% (6395 questions)
+  3: 60.78% (4266 questions)
+  4: 63.56% (793 questions)
+  5: 72.26% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.07% (151 questions)
+  4: 54.29% (630 questions)
+  5: 45.04% (1290 questions)
+  6: 53.47% (2074 questions)
+  7: 56.52% (1642 questions)
+  8: 59.92% (1185 questions)
+  9: 63.08% (1281 questions)
+  10: 63.41% (1249 questions)
+  11: 58.45% (994 questions)
+  12: 65.52% (638 questions)
+  13: 62.99% (462 questions)
+  14: 66.67% (345 questions)
+  15: 61.18% (237 questions)
+  16: 70.09% (117 questions)
+  17: 63.83% (94 questions)
+  18: 75.00% (76 questions)
+  19: 69.77% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=8, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.61%
+Open: 42.87%
+Accuracy: 57.43%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.65 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.74% (1129 questions)
+  compare: 64.69% (589 questions)
+  logical: 71.99% (1803 questions)
+  query: 42.87% (6805 questions)
+  verify: 77.22% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.90% (5186 questions)
+  cat: 49.00% (1149 questions)
+  global: 61.15% (157 questions)
+  obj: 83.55% (778 questions)
+  rel: 49.98% (5308 questions)
+
+Accuracy / steps number:
+  1: 73.84% (237 questions)
+  2: 51.79% (6395 questions)
+  3: 60.74% (4266 questions)
+  4: 62.93% (793 questions)
+  5: 71.53% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.07% (151 questions)
+  4: 53.81% (630 questions)
+  5: 43.95% (1290 questions)
+  6: 53.57% (2074 questions)
+  7: 55.91% (1642 questions)
+  8: 59.58% (1185 questions)
+  9: 62.37% (1281 questions)
+  10: 62.61% (1249 questions)
+  11: 59.15% (994 questions)
+  12: 65.67% (638 questions)
+  13: 62.55% (462 questions)
+  14: 66.09% (345 questions)
+  15: 61.18% (237 questions)
+  16: 72.65% (117 questions)
+  17: 63.83% (94 questions)
+  18: 72.37% (76 questions)
+  19: 65.12% (43 questions)
+  20: 71.88% (32 questions)
+  21: 63.16% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=8, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.59%
+Open: 42.88%
+Accuracy: 57.43%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.65 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.83% (1129 questions)
+  compare: 64.52% (589 questions)
+  logical: 71.94% (1803 questions)
+  query: 42.88% (6805 questions)
+  verify: 77.22% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.92% (5186 questions)
+  cat: 48.91% (1149 questions)
+  global: 61.15% (157 questions)
+  obj: 83.55% (778 questions)
+  rel: 49.98% (5308 questions)
+
+Accuracy / steps number:
+  1: 73.84% (237 questions)
+  2: 51.79% (6395 questions)
+  3: 60.78% (4266 questions)
+  4: 62.67% (793 questions)
+  5: 71.53% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.07% (151 questions)
+  4: 53.65% (630 questions)
+  5: 43.95% (1290 questions)
+  6: 53.47% (2074 questions)
+  7: 55.85% (1642 questions)
+  8: 59.75% (1185 questions)
+  9: 62.37% (1281 questions)
+  10: 62.61% (1249 questions)
+  11: 59.26% (994 questions)
+  12: 65.52% (638 questions)
+  13: 62.55% (462 questions)
+  14: 66.38% (345 questions)
+  15: 61.18% (237 questions)
+  16: 72.65% (117 questions)
+  17: 63.83% (94 questions)
+  18: 72.37% (76 questions)
+  19: 65.12% (43 questions)
+  20: 71.88% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=8, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 73.81%
+Open: 42.41%
+Accuracy: 56.82%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.59 (lower is better)
+
+Accuracy / structural type:
+  choose: 77.68% (1129 questions)
+  compare: 64.52% (589 questions)
+  logical: 71.33% (1803 questions)
+  query: 42.41% (6805 questions)
+  verify: 76.29% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.77% (5186 questions)
+  cat: 49.17% (1149 questions)
+  global: 57.96% (157 questions)
+  obj: 82.78% (778 questions)
+  rel: 48.83% (5308 questions)
+
+Accuracy / steps number:
+  1: 72.15% (237 questions)
+  2: 51.43% (6395 questions)
+  3: 59.73% (4266 questions)
+  4: 61.41% (793 questions)
+  5: 72.14% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.74% (151 questions)
+  4: 51.43% (630 questions)
+  5: 44.19% (1290 questions)
+  6: 52.56% (2074 questions)
+  7: 56.09% (1642 questions)
+  8: 59.32% (1185 questions)
+  9: 62.30% (1281 questions)
+  10: 61.81% (1249 questions)
+  11: 58.15% (994 questions)
+  12: 65.83% (638 questions)
+  13: 60.39% (462 questions)
+  14: 64.64% (345 questions)
+  15: 61.60% (237 questions)
+  16: 68.38% (117 questions)
+  17: 59.57% (94 questions)
+  18: 71.05% (76 questions)
+  19: 65.12% (43 questions)
+  20: 68.75% (32 questions)
+  21: 63.16% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=8, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.68%
+Open: 42.87%
+Accuracy: 57.47%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.64 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.74% (1129 questions)
+  compare: 64.69% (589 questions)
+  logical: 72.16% (1803 questions)
+  query: 42.87% (6805 questions)
+  verify: 77.26% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.92% (5186 questions)
+  cat: 48.39% (1149 questions)
+  global: 61.15% (157 questions)
+  obj: 83.80% (778 questions)
+  rel: 50.13% (5308 questions)
+
+Accuracy / steps number:
+  1: 72.57% (237 questions)
+  2: 51.73% (6395 questions)
+  3: 60.95% (4266 questions)
+  4: 62.42% (793 questions)
+  5: 72.14% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 39.74% (151 questions)
+  4: 54.44% (630 questions)
+  5: 44.50% (1290 questions)
+  6: 52.75% (2074 questions)
+  7: 55.97% (1642 questions)
+  8: 59.24% (1185 questions)
+  9: 62.14% (1281 questions)
+  10: 62.85% (1249 questions)
+  11: 59.76% (994 questions)
+  12: 65.83% (638 questions)
+  13: 61.90% (462 questions)
+  14: 65.22% (345 questions)
+  15: 64.14% (237 questions)
+  16: 70.94% (117 questions)
+  17: 65.96% (94 questions)
+  18: 72.37% (76 questions)
+  19: 72.09% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=8, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 73.67%
+Open: 41.88%
+Accuracy: 56.47%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.60 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.57% (1129 questions)
+  compare: 63.67% (589 questions)
+  logical: 71.21% (1803 questions)
+  query: 41.88% (6805 questions)
+  verify: 75.80% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 62.15% (5186 questions)
+  cat: 47.35% (1149 questions)
+  global: 58.60% (157 questions)
+  obj: 83.16% (778 questions)
+  rel: 48.93% (5308 questions)
+
+Accuracy / steps number:
+  1: 70.04% (237 questions)
+  2: 50.74% (6395 questions)
+  3: 59.89% (4266 questions)
+  4: 62.67% (793 questions)
+  5: 70.80% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.09% (151 questions)
+  4: 52.06% (630 questions)
+  5: 43.72% (1290 questions)
+  6: 52.17% (2074 questions)
+  7: 55.12% (1642 questions)
+  8: 58.82% (1185 questions)
+  9: 61.44% (1281 questions)
+  10: 61.73% (1249 questions)
+  11: 58.85% (994 questions)
+  12: 65.20% (638 questions)
+  13: 60.17% (462 questions)
+  14: 62.61% (345 questions)
+  15: 61.60% (237 questions)
+  16: 70.09% (117 questions)
+  17: 62.77% (94 questions)
+  18: 71.05% (76 questions)
+  19: 69.77% (43 questions)
+  20: 71.88% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=8, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 74.59%
+Open: 42.41%
+Accuracy: 57.18%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.66 (lower is better)
+
+Accuracy / structural type:
+  choose: 78.74% (1129 questions)
+  compare: 64.01% (589 questions)
+  logical: 72.27% (1803 questions)
+  query: 42.41% (6805 questions)
+  verify: 77.13% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 63.48% (5186 questions)
+  cat: 48.22% (1149 questions)
+  global: 60.51% (157 questions)
+  obj: 83.03% (778 questions)
+  rel: 49.08% (5308 questions)
+
+Accuracy / steps number:
+  1: 71.73% (237 questions)
+  2: 51.65% (6395 questions)
+  3: 60.24% (4266 questions)
+  4: 62.17% (793 questions)
+  5: 72.63% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 41.72% (151 questions)
+  4: 52.06% (630 questions)
+  5: 43.41% (1290 questions)
+  6: 53.38% (2074 questions)
+  7: 56.82% (1642 questions)
+  8: 59.92% (1185 questions)
+  9: 62.37% (1281 questions)
+  10: 62.69% (1249 questions)
+  11: 58.35% (994 questions)
+  12: 65.20% (638 questions)
+  13: 59.74% (462 questions)
+  14: 65.22% (345 questions)
+  15: 60.76% (237 questions)
+  16: 69.23% (117 questions)
+  17: 61.70% (94 questions)
+  18: 69.74% (76 questions)
+  19: 72.09% (43 questions)
+  20: 68.75% (32 questions)
+  21: 63.16% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=192, HEAD=8, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+no prediction for question 201307251. Please add prediction for all questions.
+----------------------------------------
+
+TOKEN=128, HEAD=24, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.31%
+Open: 39.32%
+Accuracy: 54.01%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.83 (lower is better)
+
+Accuracy / structural type:
+  choose: 74.22% (1129 questions)
+  compare: 63.16% (589 questions)
+  logical: 69.83% (1803 questions)
+  query: 39.32% (6805 questions)
+  verify: 73.18% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.70% (5186 questions)
+  cat: 43.78% (1149 questions)
+  global: 58.60% (157 questions)
+  obj: 80.21% (778 questions)
+  rel: 45.70% (5308 questions)
+
+Accuracy / steps number:
+  1: 66.24% (237 questions)
+  2: 47.51% (6395 questions)
+  3: 58.06% (4266 questions)
+  4: 60.03% (793 questions)
+  5: 71.29% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 35.10% (151 questions)
+  4: 49.68% (630 questions)
+  5: 41.09% (1290 questions)
+  6: 49.13% (2074 questions)
+  7: 52.68% (1642 questions)
+  8: 56.54% (1185 questions)
+  9: 59.48% (1281 questions)
+  10: 60.21% (1249 questions)
+  11: 56.04% (994 questions)
+  12: 63.17% (638 questions)
+  13: 58.23% (462 questions)
+  14: 59.13% (345 questions)
+  15: 57.81% (237 questions)
+  16: 67.52% (117 questions)
+  17: 58.51% (94 questions)
+  18: 68.42% (76 questions)
+  19: 69.77% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=24, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.28%
+Open: 39.40%
+Accuracy: 54.03%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.84 (lower is better)
+
+Accuracy / structural type:
+  choose: 74.31% (1129 questions)
+  compare: 62.99% (589 questions)
+  logical: 69.77% (1803 questions)
+  query: 39.40% (6805 questions)
+  verify: 73.13% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.61% (5186 questions)
+  cat: 43.69% (1149 questions)
+  global: 58.60% (157 questions)
+  obj: 80.08% (778 questions)
+  rel: 45.89% (5308 questions)
+
+Accuracy / steps number:
+  1: 66.67% (237 questions)
+  2: 47.55% (6395 questions)
+  3: 58.04% (4266 questions)
+  4: 60.15% (793 questions)
+  5: 71.17% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 34.44% (151 questions)
+  4: 49.68% (630 questions)
+  5: 40.93% (1290 questions)
+  6: 49.71% (2074 questions)
+  7: 52.56% (1642 questions)
+  8: 56.79% (1185 questions)
+  9: 59.48% (1281 questions)
+  10: 59.81% (1249 questions)
+  11: 55.73% (994 questions)
+  12: 63.01% (638 questions)
+  13: 58.23% (462 questions)
+  14: 59.13% (345 questions)
+  15: 58.23% (237 questions)
+  16: 67.52% (117 questions)
+  17: 58.51% (94 questions)
+  18: 69.74% (76 questions)
+  19: 69.77% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=24, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.99%
+Open: 39.71%
+Accuracy: 54.52%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.76 (lower is better)
+
+Accuracy / structural type:
+  choose: 75.11% (1129 questions)
+  compare: 63.67% (589 questions)
+  logical: 70.72% (1803 questions)
+  query: 39.71% (6805 questions)
+  verify: 73.62% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 61.20% (5186 questions)
+  cat: 44.73% (1149 questions)
+  global: 56.69% (157 questions)
+  obj: 79.95% (778 questions)
+  rel: 46.33% (5308 questions)
+
+Accuracy / steps number:
+  1: 68.35% (237 questions)
+  2: 48.21% (6395 questions)
+  3: 57.99% (4266 questions)
+  4: 61.29% (793 questions)
+  5: 72.14% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 49.68% (630 questions)
+  5: 41.78% (1290 questions)
+  6: 49.90% (2074 questions)
+  7: 53.23% (1642 questions)
+  8: 57.72% (1185 questions)
+  9: 59.56% (1281 questions)
+  10: 60.93% (1249 questions)
+  11: 54.83% (994 questions)
+  12: 65.05% (638 questions)
+  13: 56.49% (462 questions)
+  14: 61.74% (345 questions)
+  15: 57.81% (237 questions)
+  16: 68.38% (117 questions)
+  17: 58.51% (94 questions)
+  18: 69.74% (76 questions)
+  19: 72.09% (43 questions)
+  20: 62.50% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=24, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.19%
+Open: 39.44%
+Accuracy: 54.01%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.83 (lower is better)
+
+Accuracy / structural type:
+  choose: 74.14% (1129 questions)
+  compare: 62.99% (589 questions)
+  logical: 69.83% (1803 questions)
+  query: 39.44% (6805 questions)
+  verify: 72.96% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.57% (5186 questions)
+  cat: 44.13% (1149 questions)
+  global: 57.96% (157 questions)
+  obj: 80.33% (778 questions)
+  rel: 45.78% (5308 questions)
+
+Accuracy / steps number:
+  1: 66.67% (237 questions)
+  2: 47.55% (6395 questions)
+  3: 57.99% (4266 questions)
+  4: 59.27% (793 questions)
+  5: 71.90% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.09% (151 questions)
+  4: 49.05% (630 questions)
+  5: 41.09% (1290 questions)
+  6: 49.18% (2074 questions)
+  7: 52.80% (1642 questions)
+  8: 56.37% (1185 questions)
+  9: 59.88% (1281 questions)
+  10: 60.21% (1249 questions)
+  11: 55.53% (994 questions)
+  12: 63.17% (638 questions)
+  13: 58.23% (462 questions)
+  14: 58.55% (345 questions)
+  15: 57.38% (237 questions)
+  16: 67.52% (117 questions)
+  17: 61.70% (94 questions)
+  18: 68.42% (76 questions)
+  19: 69.77% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=24, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.21%
+Open: 39.21%
+Accuracy: 53.90%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.81 (lower is better)
+
+Accuracy / structural type:
+  choose: 73.60% (1129 questions)
+  compare: 63.16% (589 questions)
+  logical: 69.77% (1803 questions)
+  query: 39.21% (6805 questions)
+  verify: 73.27% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.14% (5186 questions)
+  cat: 43.60% (1149 questions)
+  global: 56.69% (157 questions)
+  obj: 79.95% (778 questions)
+  rel: 46.12% (5308 questions)
+
+Accuracy / steps number:
+  1: 65.40% (237 questions)
+  2: 47.54% (6395 questions)
+  3: 57.64% (4266 questions)
+  4: 61.16% (793 questions)
+  5: 70.68% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 34.44% (151 questions)
+  4: 49.52% (630 questions)
+  5: 40.85% (1290 questions)
+  6: 49.13% (2074 questions)
+  7: 52.74% (1642 questions)
+  8: 56.29% (1185 questions)
+  9: 59.41% (1281 questions)
+  10: 59.81% (1249 questions)
+  11: 55.33% (994 questions)
+  12: 63.32% (638 questions)
+  13: 59.52% (462 questions)
+  14: 59.13% (345 questions)
+  15: 57.38% (237 questions)
+  16: 65.81% (117 questions)
+  17: 58.51% (94 questions)
+  18: 69.74% (76 questions)
+  19: 67.44% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=24, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.49%
+Open: 39.65%
+Accuracy: 54.26%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.80 (lower is better)
+
+Accuracy / structural type:
+  choose: 74.93% (1129 questions)
+  compare: 62.99% (589 questions)
+  logical: 69.77% (1803 questions)
+  query: 39.65% (6805 questions)
+  verify: 73.36% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.62% (5186 questions)
+  cat: 44.65% (1149 questions)
+  global: 57.32% (157 questions)
+  obj: 81.23% (778 questions)
+  rel: 46.08% (5308 questions)
+
+Accuracy / steps number:
+  1: 68.78% (237 questions)
+  2: 48.10% (6395 questions)
+  3: 57.83% (4266 questions)
+  4: 59.90% (793 questions)
+  5: 71.29% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 34.44% (151 questions)
+  4: 50.00% (630 questions)
+  5: 41.24% (1290 questions)
+  6: 50.19% (2074 questions)
+  7: 53.29% (1642 questions)
+  8: 56.79% (1185 questions)
+  9: 59.72% (1281 questions)
+  10: 59.97% (1249 questions)
+  11: 55.43% (994 questions)
+  12: 63.48% (638 questions)
+  13: 57.58% (462 questions)
+  14: 60.00% (345 questions)
+  15: 55.70% (237 questions)
+  16: 70.09% (117 questions)
+  17: 58.51% (94 questions)
+  18: 69.74% (76 questions)
+  19: 65.12% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=24, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.31%
+Open: 39.91%
+Accuracy: 54.33%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.77 (lower is better)
+
+Accuracy / structural type:
+  choose: 74.49% (1129 questions)
+  compare: 62.82% (589 questions)
+  logical: 69.94% (1803 questions)
+  query: 39.91% (6805 questions)
+  verify: 73.05% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.59% (5186 questions)
+  cat: 44.21% (1149 questions)
+  global: 59.24% (157 questions)
+  obj: 80.85% (778 questions)
+  rel: 46.36% (5308 questions)
+
+Accuracy / steps number:
+  1: 67.93% (237 questions)
+  2: 47.97% (6395 questions)
+  3: 58.16% (4266 questions)
+  4: 60.15% (793 questions)
+  5: 71.41% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 35.76% (151 questions)
+  4: 50.00% (630 questions)
+  5: 41.16% (1290 questions)
+  6: 50.14% (2074 questions)
+  7: 52.38% (1642 questions)
+  8: 56.54% (1185 questions)
+  9: 60.50% (1281 questions)
+  10: 60.61% (1249 questions)
+  11: 56.34% (994 questions)
+  12: 63.01% (638 questions)
+  13: 58.44% (462 questions)
+  14: 58.84% (345 questions)
+  15: 57.81% (237 questions)
+  16: 67.52% (117 questions)
+  17: 56.38% (94 questions)
+  18: 69.74% (76 questions)
+  19: 67.44% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=16, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 72.80%
+Open: 40.65%
+Accuracy: 55.41%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.74 (lower is better)
+
+Accuracy / structural type:
+  choose: 76.88% (1129 questions)
+  compare: 63.84% (589 questions)
+  logical: 70.44% (1803 questions)
+  query: 40.65% (6805 questions)
+  verify: 75.00% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 61.59% (5186 questions)
+  cat: 45.52% (1149 questions)
+  global: 61.15% (157 questions)
+  obj: 82.39% (778 questions)
+  rel: 47.38% (5308 questions)
+
+Accuracy / steps number:
+  1: 69.62% (237 questions)
+  2: 49.13% (6395 questions)
+  3: 59.54% (4266 questions)
+  4: 60.03% (793 questions)
+  5: 71.29% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 51.59% (630 questions)
+  5: 43.26% (1290 questions)
+  6: 49.81% (2074 questions)
+  7: 53.84% (1642 questions)
+  8: 57.89% (1185 questions)
+  9: 61.05% (1281 questions)
+  10: 61.65% (1249 questions)
+  11: 57.24% (994 questions)
+  12: 64.42% (638 questions)
+  13: 58.66% (462 questions)
+  14: 60.58% (345 questions)
+  15: 59.92% (237 questions)
+  16: 70.09% (117 questions)
+  17: 62.77% (94 questions)
+  18: 75.00% (76 questions)
+  19: 74.42% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=16, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 72.79%
+Open: 40.63%
+Accuracy: 55.39%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.74 (lower is better)
+
+Accuracy / structural type:
+  choose: 76.71% (1129 questions)
+  compare: 64.01% (589 questions)
+  logical: 70.60% (1803 questions)
+  query: 40.63% (6805 questions)
+  verify: 74.87% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 61.51% (5186 questions)
+  cat: 45.52% (1149 questions)
+  global: 61.15% (157 questions)
+  obj: 82.39% (778 questions)
+  rel: 47.42% (5308 questions)
+
+Accuracy / steps number:
+  1: 69.62% (237 questions)
+  2: 49.02% (6395 questions)
+  3: 59.56% (4266 questions)
+  4: 60.28% (793 questions)
+  5: 71.53% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.09% (151 questions)
+  4: 51.27% (630 questions)
+  5: 43.10% (1290 questions)
+  6: 49.66% (2074 questions)
+  7: 53.96% (1642 questions)
+  8: 57.81% (1185 questions)
+  9: 61.28% (1281 questions)
+  10: 61.81% (1249 questions)
+  11: 56.94% (994 questions)
+  12: 64.42% (638 questions)
+  13: 58.66% (462 questions)
+  14: 60.29% (345 questions)
+  15: 60.76% (237 questions)
+  16: 70.09% (117 questions)
+  17: 62.77% (94 questions)
+  18: 75.00% (76 questions)
+  19: 74.42% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=16, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 72.65%
+Open: 40.24%
+Accuracy: 55.11%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.75 (lower is better)
+
+Accuracy / structural type:
+  choose: 75.64% (1129 questions)
+  compare: 64.01% (589 questions)
+  logical: 71.21% (1803 questions)
+  query: 40.24% (6805 questions)
+  verify: 74.56% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 61.18% (5186 questions)
+  cat: 45.00% (1149 questions)
+  global: 57.32% (157 questions)
+  obj: 81.23% (778 questions)
+  rel: 47.48% (5308 questions)
+
+Accuracy / steps number:
+  1: 67.51% (237 questions)
+  2: 48.98% (6395 questions)
+  3: 58.35% (4266 questions)
+  4: 62.93% (793 questions)
+  5: 72.02% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.09% (151 questions)
+  4: 51.27% (630 questions)
+  5: 42.48% (1290 questions)
+  6: 50.24% (2074 questions)
+  7: 53.11% (1642 questions)
+  8: 58.14% (1185 questions)
+  9: 60.27% (1281 questions)
+  10: 61.01% (1249 questions)
+  11: 56.14% (994 questions)
+  12: 65.05% (638 questions)
+  13: 59.31% (462 questions)
+  14: 63.19% (345 questions)
+  15: 56.96% (237 questions)
+  16: 68.38% (117 questions)
+  17: 62.77% (94 questions)
+  18: 72.37% (76 questions)
+  19: 67.44% (43 questions)
+  20: 62.50% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=16, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 72.16%
+Open: 40.16%
+Accuracy: 54.85%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.75 (lower is better)
+
+Accuracy / structural type:
+  choose: 75.82% (1129 questions)
+  compare: 63.33% (589 questions)
+  logical: 70.22% (1803 questions)
+  query: 40.16% (6805 questions)
+  verify: 74.20% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 61.30% (5186 questions)
+  cat: 45.26% (1149 questions)
+  global: 59.87% (157 questions)
+  obj: 81.62% (778 questions)
+  rel: 46.55% (5308 questions)
+
+Accuracy / steps number:
+  1: 69.20% (237 questions)
+  2: 48.63% (6395 questions)
+  3: 58.67% (4266 questions)
+  4: 60.40% (793 questions)
+  5: 71.05% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 50.63% (630 questions)
+  5: 42.64% (1290 questions)
+  6: 49.90% (2074 questions)
+  7: 53.71% (1642 questions)
+  8: 57.05% (1185 questions)
+  9: 60.50% (1281 questions)
+  10: 60.69% (1249 questions)
+  11: 56.94% (994 questions)
+  12: 63.95% (638 questions)
+  13: 58.01% (462 questions)
+  14: 59.71% (345 questions)
+  15: 57.81% (237 questions)
+  16: 67.52% (117 questions)
+  17: 62.77% (94 questions)
+  18: 68.42% (76 questions)
+  19: 69.77% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=16, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 70.29%
+Open: 38.31%
+Accuracy: 52.99%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.97 (lower is better)
+
+Accuracy / structural type:
+  choose: 72.98% (1129 questions)
+  compare: 63.33% (589 questions)
+  logical: 69.33% (1803 questions)
+  query: 38.31% (6805 questions)
+  verify: 71.54% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 59.70% (5186 questions)
+  cat: 42.56% (1149 questions)
+  global: 52.23% (157 questions)
+  obj: 79.56% (778 questions)
+  rel: 44.82% (5308 questions)
+
+Accuracy / steps number:
+  1: 64.98% (237 questions)
+  2: 46.51% (6395 questions)
+  3: 56.80% (4266 questions)
+  4: 59.90% (793 questions)
+  5: 70.68% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 31.13% (151 questions)
+  4: 46.51% (630 questions)
+  5: 40.08% (1290 questions)
+  6: 49.28% (2074 questions)
+  7: 52.31% (1642 questions)
+  8: 57.05% (1185 questions)
+  9: 58.00% (1281 questions)
+  10: 58.45% (1249 questions)
+  11: 53.52% (994 questions)
+  12: 62.23% (638 questions)
+  13: 57.36% (462 questions)
+  14: 57.68% (345 questions)
+  15: 54.43% (237 questions)
+  16: 65.81% (117 questions)
+  17: 57.45% (94 questions)
+  18: 65.79% (76 questions)
+  19: 65.12% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=16, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.92%
+Open: 40.65%
+Accuracy: 55.00%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.75 (lower is better)
+
+Accuracy / structural type:
+  choose: 75.64% (1129 questions)
+  compare: 63.67% (589 questions)
+  logical: 70.38% (1803 questions)
+  query: 40.65% (6805 questions)
+  verify: 73.45% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 61.55% (5186 questions)
+  cat: 46.21% (1149 questions)
+  global: 57.96% (157 questions)
+  obj: 80.85% (778 questions)
+  rel: 46.63% (5308 questions)
+
+Accuracy / steps number:
+  1: 69.20% (237 questions)
+  2: 48.82% (6395 questions)
+  3: 58.63% (4266 questions)
+  4: 60.53% (793 questions)
+  5: 71.90% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 50.79% (630 questions)
+  5: 42.17% (1290 questions)
+  6: 50.82% (2074 questions)
+  7: 54.26% (1642 questions)
+  8: 57.55% (1185 questions)
+  9: 59.88% (1281 questions)
+  10: 61.25% (1249 questions)
+  11: 56.44% (994 questions)
+  12: 64.42% (638 questions)
+  13: 58.66% (462 questions)
+  14: 60.00% (345 questions)
+  15: 54.43% (237 questions)
+  16: 70.09% (117 questions)
+  17: 57.45% (94 questions)
+  18: 69.74% (76 questions)
+  19: 65.12% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=16, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 72.74%
+Open: 40.65%
+Accuracy: 55.37%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.70 (lower is better)
+
+Accuracy / structural type:
+  choose: 76.17% (1129 questions)
+  compare: 64.69% (589 questions)
+  logical: 70.72% (1803 questions)
+  query: 40.65% (6805 questions)
+  verify: 74.73% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 61.63% (5186 questions)
+  cat: 45.52% (1149 questions)
+  global: 59.24% (157 questions)
+  obj: 81.49% (778 questions)
+  rel: 47.46% (5308 questions)
+
+Accuracy / steps number:
+  1: 69.62% (237 questions)
+  2: 49.12% (6395 questions)
+  3: 59.14% (4266 questions)
+  4: 60.40% (793 questions)
+  5: 72.87% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.75% (151 questions)
+  4: 51.27% (630 questions)
+  5: 43.18% (1290 questions)
+  6: 50.14% (2074 questions)
+  7: 53.47% (1642 questions)
+  8: 58.06% (1185 questions)
+  9: 61.12% (1281 questions)
+  10: 61.41% (1249 questions)
+  11: 56.64% (994 questions)
+  12: 64.42% (638 questions)
+  13: 59.52% (462 questions)
+  14: 62.03% (345 questions)
+  15: 59.49% (237 questions)
+  16: 70.09% (117 questions)
+  17: 58.51% (94 questions)
+  18: 71.05% (76 questions)
+  19: 74.42% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=8, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.59%
+Open: 39.94%
+Accuracy: 54.47%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.74 (lower is better)
+
+Accuracy / structural type:
+  choose: 76.09% (1129 questions)
+  compare: 63.50% (589 questions)
+  logical: 69.61% (1803 questions)
+  query: 39.94% (6805 questions)
+  verify: 73.05% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.68% (5186 questions)
+  cat: 44.30% (1149 questions)
+  global: 59.87% (157 questions)
+  obj: 80.98% (778 questions)
+  rel: 46.55% (5308 questions)
+
+Accuracy / steps number:
+  1: 67.09% (237 questions)
+  2: 48.08% (6395 questions)
+  3: 58.74% (4266 questions)
+  4: 59.39% (793 questions)
+  5: 70.68% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 49.52% (630 questions)
+  5: 40.70% (1290 questions)
+  6: 49.71% (2074 questions)
+  7: 53.17% (1642 questions)
+  8: 57.47% (1185 questions)
+  9: 60.42% (1281 questions)
+  10: 60.05% (1249 questions)
+  11: 55.73% (994 questions)
+  12: 63.32% (638 questions)
+  13: 58.23% (462 questions)
+  14: 61.45% (345 questions)
+  15: 60.34% (237 questions)
+  16: 69.23% (117 questions)
+  17: 64.89% (94 questions)
+  18: 67.11% (76 questions)
+  19: 72.09% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=8, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.70%
+Open: 39.99%
+Accuracy: 54.54%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.73 (lower is better)
+
+Accuracy / structural type:
+  choose: 76.09% (1129 questions)
+  compare: 63.50% (589 questions)
+  logical: 69.88% (1803 questions)
+  query: 39.99% (6805 questions)
+  verify: 73.09% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.74% (5186 questions)
+  cat: 44.47% (1149 questions)
+  global: 59.87% (157 questions)
+  obj: 81.23% (778 questions)
+  rel: 46.59% (5308 questions)
+
+Accuracy / steps number:
+  1: 67.09% (237 questions)
+  2: 48.16% (6395 questions)
+  3: 58.77% (4266 questions)
+  4: 59.65% (793 questions)
+  5: 70.80% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 50.00% (630 questions)
+  5: 40.78% (1290 questions)
+  6: 49.81% (2074 questions)
+  7: 53.11% (1642 questions)
+  8: 57.55% (1185 questions)
+  9: 60.73% (1281 questions)
+  10: 60.05% (1249 questions)
+  11: 55.73% (994 questions)
+  12: 63.32% (638 questions)
+  13: 58.01% (462 questions)
+  14: 61.45% (345 questions)
+  15: 60.34% (237 questions)
+  16: 69.23% (117 questions)
+  17: 64.89% (94 questions)
+  18: 67.11% (76 questions)
+  19: 72.09% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=8, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 70.78%
+Open: 38.62%
+Accuracy: 53.38%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.83 (lower is better)
+
+Accuracy / structural type:
+  choose: 72.98% (1129 questions)
+  compare: 63.16% (589 questions)
+  logical: 69.27% (1803 questions)
+  query: 38.62% (6805 questions)
+  verify: 72.87% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.20% (5186 questions)
+  cat: 42.82% (1149 questions)
+  global: 53.50% (157 questions)
+  obj: 79.69% (778 questions)
+  rel: 45.14% (5308 questions)
+
+Accuracy / steps number:
+  1: 64.56% (237 questions)
+  2: 47.54% (6395 questions)
+  3: 56.52% (4266 questions)
+  4: 59.52% (793 questions)
+  5: 70.32% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 49.21% (630 questions)
+  5: 41.86% (1290 questions)
+  6: 49.04% (2074 questions)
+  7: 52.31% (1642 questions)
+  8: 56.12% (1185 questions)
+  9: 58.39% (1281 questions)
+  10: 58.61% (1249 questions)
+  11: 54.33% (994 questions)
+  12: 60.66% (638 questions)
+  13: 57.58% (462 questions)
+  14: 59.42% (345 questions)
+  15: 58.23% (237 questions)
+  16: 67.52% (117 questions)
+  17: 52.13% (94 questions)
+  18: 65.79% (76 questions)
+  19: 65.12% (43 questions)
+  20: 62.50% (32 questions)
+  21: 73.68% (19 questions)
+  22: 75.00% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=8, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.87%
+Open: 40.10%
+Accuracy: 54.68%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.73 (lower is better)
+
+Accuracy / structural type:
+  choose: 75.29% (1129 questions)
+  compare: 64.18% (589 questions)
+  logical: 70.33% (1803 questions)
+  query: 40.10% (6805 questions)
+  verify: 73.40% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.95% (5186 questions)
+  cat: 44.73% (1149 questions)
+  global: 60.51% (157 questions)
+  obj: 81.11% (778 questions)
+  rel: 46.67% (5308 questions)
+
+Accuracy / steps number:
+  1: 67.51% (237 questions)
+  2: 48.23% (6395 questions)
+  3: 58.84% (4266 questions)
+  4: 60.53% (793 questions)
+  5: 71.29% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 37.09% (151 questions)
+  4: 49.84% (630 questions)
+  5: 40.85% (1290 questions)
+  6: 49.86% (2074 questions)
+  7: 53.90% (1642 questions)
+  8: 57.64% (1185 questions)
+  9: 60.34% (1281 questions)
+  10: 61.33% (1249 questions)
+  11: 55.73% (994 questions)
+  12: 63.32% (638 questions)
+  13: 58.66% (462 questions)
+  14: 60.00% (345 questions)
+  15: 59.92% (237 questions)
+  16: 69.23% (117 questions)
+  17: 59.57% (94 questions)
+  18: 68.42% (76 questions)
+  19: 67.44% (43 questions)
+  20: 65.62% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=8, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 69.95%
+Open: 37.60%
+Accuracy: 52.45%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 2.07 (lower is better)
+
+Accuracy / structural type:
+  choose: 72.98% (1129 questions)
+  compare: 62.99% (589 questions)
+  logical: 68.83% (1803 questions)
+  query: 37.60% (6805 questions)
+  verify: 71.14% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 59.14% (5186 questions)
+  cat: 42.04% (1149 questions)
+  global: 55.41% (157 questions)
+  obj: 78.66% (778 questions)
+  rel: 44.24% (5308 questions)
+
+Accuracy / steps number:
+  1: 64.98% (237 questions)
+  2: 45.88% (6395 questions)
+  3: 56.35% (4266 questions)
+  4: 59.14% (793 questions)
+  5: 70.44% (822 questions)
+  6: 80.49% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 31.79% (151 questions)
+  4: 47.46% (630 questions)
+  5: 39.30% (1290 questions)
+  6: 47.54% (2074 questions)
+  7: 51.04% (1642 questions)
+  8: 55.44% (1185 questions)
+  9: 57.85% (1281 questions)
+  10: 58.37% (1249 questions)
+  11: 54.63% (994 questions)
+  12: 61.29% (638 questions)
+  13: 59.31% (462 questions)
+  14: 57.68% (345 questions)
+  15: 55.70% (237 questions)
+  16: 60.68% (117 questions)
+  17: 56.38% (94 questions)
+  18: 71.05% (76 questions)
+  19: 65.12% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=8, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 71.71%
+Open: 40.09%
+Accuracy: 54.60%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 1.69 (lower is better)
+
+Accuracy / structural type:
+  choose: 74.76% (1129 questions)
+  compare: 63.67% (589 questions)
+  logical: 69.99% (1803 questions)
+  query: 40.09% (6805 questions)
+  verify: 73.67% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 60.93% (5186 questions)
+  cat: 44.65% (1149 questions)
+  global: 54.78% (157 questions)
+  obj: 80.46% (778 questions)
+  rel: 46.78% (5308 questions)
+
+Accuracy / steps number:
+  1: 67.51% (237 questions)
+  2: 48.58% (6395 questions)
+  3: 58.13% (4266 questions)
+  4: 60.03% (793 questions)
+  5: 71.29% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 36.42% (151 questions)
+  4: 48.57% (630 questions)
+  5: 41.47% (1290 questions)
+  6: 51.30% (2074 questions)
+  7: 54.20% (1642 questions)
+  8: 57.55% (1185 questions)
+  9: 59.64% (1281 questions)
+  10: 60.05% (1249 questions)
+  11: 54.93% (994 questions)
+  12: 63.32% (638 questions)
+  13: 58.23% (462 questions)
+  14: 60.87% (345 questions)
+  15: 56.12% (237 questions)
+  16: 69.23% (117 questions)
+  17: 55.32% (94 questions)
+  18: 71.05% (76 questions)
+  19: 65.12% (43 questions)
+  20: 62.50% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=128, HEAD=8, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+no prediction for question 201307251. Please add prediction for all questions.
+----------------------------------------
+
+TOKEN=64, HEAD=24, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.65%
+Open: 30.68%
+Accuracy: 46.73%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.31 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.08% (1129 questions)
+  compare: 62.65% (589 questions)
+  logical: 66.44% (1803 questions)
+  query: 30.68% (6805 questions)
+  verify: 65.59% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.09% (5186 questions)
+  cat: 33.51% (1149 questions)
+  global: 42.68% (157 questions)
+  obj: 71.08% (778 questions)
+  rel: 37.98% (5308 questions)
+
+Accuracy / steps number:
+  1: 54.43% (237 questions)
+  2: 39.33% (6395 questions)
+  3: 50.30% (4266 questions)
+  4: 57.76% (793 questions)
+  5: 69.46% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 22.52% (151 questions)
+  4: 39.05% (630 questions)
+  5: 33.10% (1290 questions)
+  6: 42.67% (2074 questions)
+  7: 46.16% (1642 questions)
+  8: 48.86% (1185 questions)
+  9: 53.01% (1281 questions)
+  10: 53.88% (1249 questions)
+  11: 48.69% (994 questions)
+  12: 53.29% (638 questions)
+  13: 54.11% (462 questions)
+  14: 50.43% (345 questions)
+  15: 49.37% (237 questions)
+  16: 55.56% (117 questions)
+  17: 48.94% (94 questions)
+  18: 63.16% (76 questions)
+  19: 62.79% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=24, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.72%
+Open: 30.76%
+Accuracy: 46.80%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.28 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.16% (1129 questions)
+  compare: 62.48% (589 questions)
+  logical: 66.50% (1803 questions)
+  query: 30.76% (6805 questions)
+  verify: 65.72% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.17% (5186 questions)
+  cat: 33.33% (1149 questions)
+  global: 42.68% (157 questions)
+  obj: 71.08% (778 questions)
+  rel: 38.11% (5308 questions)
+
+Accuracy / steps number:
+  1: 54.43% (237 questions)
+  2: 39.41% (6395 questions)
+  3: 50.38% (4266 questions)
+  4: 57.76% (793 questions)
+  5: 69.59% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 22.52% (151 questions)
+  4: 39.52% (630 questions)
+  5: 33.26% (1290 questions)
+  6: 42.57% (2074 questions)
+  7: 46.04% (1642 questions)
+  8: 48.95% (1185 questions)
+  9: 53.16% (1281 questions)
+  10: 53.96% (1249 questions)
+  11: 48.69% (994 questions)
+  12: 53.61% (638 questions)
+  13: 54.11% (462 questions)
+  14: 51.01% (345 questions)
+  15: 50.21% (237 questions)
+  16: 55.56% (117 questions)
+  17: 47.87% (94 questions)
+  18: 61.84% (76 questions)
+  19: 62.79% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=24, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.27%
+Open: 29.99%
+Accuracy: 46.18%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.26 (lower is better)
+
+Accuracy / structural type:
+  choose: 65.72% (1129 questions)
+  compare: 63.84% (589 questions)
+  logical: 65.67% (1803 questions)
+  query: 29.99% (6805 questions)
+  verify: 65.10% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.30% (5186 questions)
+  cat: 33.33% (1149 questions)
+  global: 39.49% (157 questions)
+  obj: 70.69% (778 questions)
+  rel: 36.66% (5308 questions)
+
+Accuracy / steps number:
+  1: 51.05% (237 questions)
+  2: 38.48% (6395 questions)
+  3: 50.33% (4266 questions)
+  4: 57.12% (793 questions)
+  5: 69.10% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 21.19% (151 questions)
+  4: 38.10% (630 questions)
+  5: 31.55% (1290 questions)
+  6: 42.53% (2074 questions)
+  7: 46.41% (1642 questions)
+  8: 48.02% (1185 questions)
+  9: 52.54% (1281 questions)
+  10: 53.80% (1249 questions)
+  11: 48.49% (994 questions)
+  12: 55.17% (638 questions)
+  13: 52.38% (462 questions)
+  14: 49.28% (345 questions)
+  15: 48.10% (237 questions)
+  16: 50.43% (117 questions)
+  17: 41.49% (94 questions)
+  18: 57.89% (76 questions)
+  19: 65.12% (43 questions)
+  20: 62.50% (32 questions)
+  21: 68.42% (19 questions)
+  22: 50.00% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=24, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.58%
+Open: 30.74%
+Accuracy: 46.73%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.31 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.08% (1129 questions)
+  compare: 62.82% (589 questions)
+  logical: 66.44% (1803 questions)
+  query: 30.74% (6805 questions)
+  verify: 65.36% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.19% (5186 questions)
+  cat: 34.03% (1149 questions)
+  global: 42.68% (157 questions)
+  obj: 70.44% (778 questions)
+  rel: 37.87% (5308 questions)
+
+Accuracy / steps number:
+  1: 55.27% (237 questions)
+  2: 39.31% (6395 questions)
+  3: 50.19% (4266 questions)
+  4: 58.39% (793 questions)
+  5: 69.34% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 22.52% (151 questions)
+  4: 38.73% (630 questions)
+  5: 33.18% (1290 questions)
+  6: 43.15% (2074 questions)
+  7: 45.98% (1642 questions)
+  8: 48.78% (1185 questions)
+  9: 52.46% (1281 questions)
+  10: 54.28% (1249 questions)
+  11: 48.49% (994 questions)
+  12: 53.45% (638 questions)
+  13: 53.68% (462 questions)
+  14: 50.72% (345 questions)
+  15: 48.95% (237 questions)
+  16: 56.41% (117 questions)
+  17: 47.87% (94 questions)
+  18: 63.16% (76 questions)
+  19: 62.79% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=24, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.13%
+Open: 30.23%
+Accuracy: 46.25%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.32 (lower is better)
+
+Accuracy / structural type:
+  choose: 65.46% (1129 questions)
+  compare: 62.48% (589 questions)
+  logical: 65.72% (1803 questions)
+  query: 30.23% (6805 questions)
+  verify: 65.19% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 54.88% (5186 questions)
+  cat: 33.68% (1149 questions)
+  global: 40.13% (157 questions)
+  obj: 70.69% (778 questions)
+  rel: 37.13% (5308 questions)
+
+Accuracy / steps number:
+  1: 54.43% (237 questions)
+  2: 38.87% (6395 questions)
+  3: 49.81% (4266 questions)
+  4: 57.25% (793 questions)
+  5: 68.61% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 22.52% (151 questions)
+  4: 37.78% (630 questions)
+  5: 32.40% (1290 questions)
+  6: 43.11% (2074 questions)
+  7: 46.41% (1642 questions)
+  8: 48.10% (1185 questions)
+  9: 52.15% (1281 questions)
+  10: 53.08% (1249 questions)
+  11: 48.09% (994 questions)
+  12: 52.82% (638 questions)
+  13: 52.16% (462 questions)
+  14: 52.46% (345 questions)
+  15: 47.26% (237 questions)
+  16: 53.85% (117 questions)
+  17: 44.68% (94 questions)
+  18: 57.89% (76 questions)
+  19: 62.79% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=24, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.88%
+Open: 31.52%
+Accuracy: 47.29%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.16 (lower is better)
+
+Accuracy / structural type:
+  choose: 65.99% (1129 questions)
+  compare: 63.50% (589 questions)
+  logical: 67.00% (1803 questions)
+  query: 31.52% (6805 questions)
+  verify: 65.54% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.98% (5186 questions)
+  cat: 34.99% (1149 questions)
+  global: 44.59% (157 questions)
+  obj: 71.72% (778 questions)
+  rel: 37.96% (5308 questions)
+
+Accuracy / steps number:
+  1: 56.12% (237 questions)
+  2: 39.58% (6395 questions)
+  3: 51.24% (4266 questions)
+  4: 59.14% (793 questions)
+  5: 69.34% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 23.18% (151 questions)
+  4: 39.68% (630 questions)
+  5: 33.02% (1290 questions)
+  6: 43.39% (2074 questions)
+  7: 46.89% (1642 questions)
+  8: 49.20% (1185 questions)
+  9: 54.02% (1281 questions)
+  10: 54.04% (1249 questions)
+  11: 49.09% (994 questions)
+  12: 54.39% (638 questions)
+  13: 54.11% (462 questions)
+  14: 52.46% (345 questions)
+  15: 48.52% (237 questions)
+  16: 56.41% (117 questions)
+  17: 51.06% (94 questions)
+  18: 64.47% (76 questions)
+  19: 62.79% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=24, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.46%
+Open: 30.71%
+Accuracy: 46.66%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.41 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.16% (1129 questions)
+  compare: 62.82% (589 questions)
+  logical: 65.83% (1803 questions)
+  query: 30.71% (6805 questions)
+  verify: 65.50% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.23% (5186 questions)
+  cat: 33.16% (1149 questions)
+  global: 43.31% (157 questions)
+  obj: 70.69% (778 questions)
+  rel: 37.79% (5308 questions)
+
+Accuracy / steps number:
+  1: 53.16% (237 questions)
+  2: 39.41% (6395 questions)
+  3: 50.21% (4266 questions)
+  4: 57.38% (793 questions)
+  5: 68.98% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 23.84% (151 questions)
+  4: 39.21% (630 questions)
+  5: 33.26% (1290 questions)
+  6: 42.24% (2074 questions)
+  7: 46.59% (1642 questions)
+  8: 48.44% (1185 questions)
+  9: 52.54% (1281 questions)
+  10: 54.92% (1249 questions)
+  11: 48.59% (994 questions)
+  12: 53.13% (638 questions)
+  13: 52.60% (462 questions)
+  14: 50.72% (345 questions)
+  15: 48.52% (237 questions)
+  16: 55.56% (117 questions)
+  17: 46.81% (94 questions)
+  18: 60.53% (76 questions)
+  19: 65.12% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=16, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.96%
+Open: 31.55%
+Accuracy: 47.34%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 2.96 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.34% (1129 questions)
+  compare: 63.33% (589 questions)
+  logical: 66.61% (1803 questions)
+  query: 31.55% (6805 questions)
+  verify: 65.94% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.48% (5186 questions)
+  cat: 35.25% (1149 questions)
+  global: 45.86% (157 questions)
+  obj: 72.49% (778 questions)
+  rel: 38.38% (5308 questions)
+
+Accuracy / steps number:
+  1: 54.85% (237 questions)
+  2: 39.97% (6395 questions)
+  3: 51.15% (4266 questions)
+  4: 57.63% (793 questions)
+  5: 69.46% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 21.85% (151 questions)
+  4: 40.48% (630 questions)
+  5: 33.64% (1290 questions)
+  6: 42.96% (2074 questions)
+  7: 47.02% (1642 questions)
+  8: 49.20% (1185 questions)
+  9: 54.25% (1281 questions)
+  10: 54.28% (1249 questions)
+  11: 49.30% (994 questions)
+  12: 55.02% (638 questions)
+  13: 53.46% (462 questions)
+  14: 51.88% (345 questions)
+  15: 48.95% (237 questions)
+  16: 58.97% (117 questions)
+  17: 47.87% (94 questions)
+  18: 56.58% (76 questions)
+  19: 65.12% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=16, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 66.05%
+Open: 31.67%
+Accuracy: 47.45%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 2.98 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.43% (1129 questions)
+  compare: 63.16% (589 questions)
+  logical: 66.78% (1803 questions)
+  query: 31.67% (6805 questions)
+  verify: 66.03% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.57% (5186 questions)
+  cat: 35.42% (1149 questions)
+  global: 45.86% (157 questions)
+  obj: 72.37% (778 questions)
+  rel: 38.51% (5308 questions)
+
+Accuracy / steps number:
+  1: 55.27% (237 questions)
+  2: 40.08% (6395 questions)
+  3: 51.17% (4266 questions)
+  4: 57.88% (793 questions)
+  5: 69.71% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 21.85% (151 questions)
+  4: 40.48% (630 questions)
+  5: 33.88% (1290 questions)
+  6: 43.01% (2074 questions)
+  7: 47.02% (1642 questions)
+  8: 49.54% (1185 questions)
+  9: 54.49% (1281 questions)
+  10: 54.44% (1249 questions)
+  11: 49.20% (994 questions)
+  12: 55.02% (638 questions)
+  13: 53.90% (462 questions)
+  14: 51.59% (345 questions)
+  15: 48.95% (237 questions)
+  16: 58.97% (117 questions)
+  17: 47.87% (94 questions)
+  18: 56.58% (76 questions)
+  19: 65.12% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=16, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.58%
+Open: 30.43%
+Accuracy: 46.57%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 2.78 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.34% (1129 questions)
+  compare: 64.18% (589 questions)
+  logical: 65.67% (1803 questions)
+  query: 30.43% (6805 questions)
+  verify: 65.50% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.65% (5186 questions)
+  cat: 33.94% (1149 questions)
+  global: 42.04% (157 questions)
+  obj: 70.82% (778 questions)
+  rel: 37.00% (5308 questions)
+
+Accuracy / steps number:
+  1: 52.74% (237 questions)
+  2: 38.95% (6395 questions)
+  3: 50.61% (4266 questions)
+  4: 57.63% (793 questions)
+  5: 68.73% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 23.18% (151 questions)
+  4: 38.57% (630 questions)
+  5: 32.17% (1290 questions)
+  6: 42.67% (2074 questions)
+  7: 47.02% (1642 questions)
+  8: 48.52% (1185 questions)
+  9: 53.47% (1281 questions)
+  10: 53.72% (1249 questions)
+  11: 47.99% (994 questions)
+  12: 55.17% (638 questions)
+  13: 51.73% (462 questions)
+  14: 52.17% (345 questions)
+  15: 45.99% (237 questions)
+  16: 54.70% (117 questions)
+  17: 42.55% (94 questions)
+  18: 59.21% (76 questions)
+  19: 60.47% (43 questions)
+  20: 68.75% (32 questions)
+  21: 68.42% (19 questions)
+  22: 50.00% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=16, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.44%
+Open: 31.05%
+Accuracy: 46.84%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.12 (lower is better)
+
+Accuracy / structural type:
+  choose: 65.01% (1129 questions)
+  compare: 63.33% (589 questions)
+  logical: 66.17% (1803 questions)
+  query: 31.05% (6805 questions)
+  verify: 65.63% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.09% (5186 questions)
+  cat: 34.38% (1149 questions)
+  global: 45.22% (157 questions)
+  obj: 71.98% (778 questions)
+  rel: 37.83% (5308 questions)
+
+Accuracy / steps number:
+  1: 54.43% (237 questions)
+  2: 39.64% (6395 questions)
+  3: 50.35% (4266 questions)
+  4: 56.37% (793 questions)
+  5: 69.71% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 21.85% (151 questions)
+  4: 40.16% (630 questions)
+  5: 33.72% (1290 questions)
+  6: 42.82% (2074 questions)
+  7: 46.41% (1642 questions)
+  8: 48.69% (1185 questions)
+  9: 53.63% (1281 questions)
+  10: 53.64% (1249 questions)
+  11: 48.39% (994 questions)
+  12: 54.08% (638 questions)
+  13: 53.03% (462 questions)
+  14: 50.43% (345 questions)
+  15: 47.68% (237 questions)
+  16: 57.26% (117 questions)
+  17: 47.87% (94 questions)
+  18: 56.58% (76 questions)
+  19: 65.12% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=16, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 64.66%
+Open: 29.70%
+Accuracy: 45.75%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.47 (lower is better)
+
+Accuracy / structural type:
+  choose: 65.10% (1129 questions)
+  compare: 62.31% (589 questions)
+  logical: 64.89% (1803 questions)
+  query: 29.70% (6805 questions)
+  verify: 64.88% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 54.40% (5186 questions)
+  cat: 32.11% (1149 questions)
+  global: 43.31% (157 questions)
+  obj: 69.79% (778 questions)
+  rel: 36.79% (5308 questions)
+
+Accuracy / steps number:
+  1: 50.63% (237 questions)
+  2: 38.33% (6395 questions)
+  3: 49.81% (4266 questions)
+  4: 55.23% (793 questions)
+  5: 68.37% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 25.17% (151 questions)
+  4: 37.94% (630 questions)
+  5: 31.32% (1290 questions)
+  6: 41.61% (2074 questions)
+  7: 46.04% (1642 questions)
+  8: 47.85% (1185 questions)
+  9: 51.99% (1281 questions)
+  10: 52.44% (1249 questions)
+  11: 47.89% (994 questions)
+  12: 53.45% (638 questions)
+  13: 51.30% (462 questions)
+  14: 51.59% (345 questions)
+  15: 47.26% (237 questions)
+  16: 50.43% (117 questions)
+  17: 44.68% (94 questions)
+  18: 63.16% (76 questions)
+  19: 62.79% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=16, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 66.15%
+Open: 32.06%
+Accuracy: 47.71%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.00 (lower is better)
+
+Accuracy / structural type:
+  choose: 67.32% (1129 questions)
+  compare: 63.16% (589 questions)
+  logical: 66.83% (1803 questions)
+  query: 32.06% (6805 questions)
+  verify: 65.81% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.90% (5186 questions)
+  cat: 35.51% (1149 questions)
+  global: 44.59% (157 questions)
+  obj: 72.24% (778 questions)
+  rel: 38.85% (5308 questions)
+
+Accuracy / steps number:
+  1: 55.70% (237 questions)
+  2: 40.23% (6395 questions)
+  3: 51.85% (4266 questions)
+  4: 56.75% (793 questions)
+  5: 69.95% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 19.87% (151 questions)
+  4: 39.21% (630 questions)
+  5: 33.33% (1290 questions)
+  6: 43.39% (2074 questions)
+  7: 47.56% (1642 questions)
+  8: 50.38% (1185 questions)
+  9: 53.55% (1281 questions)
+  10: 55.00% (1249 questions)
+  11: 49.80% (994 questions)
+  12: 54.86% (638 questions)
+  13: 55.41% (462 questions)
+  14: 54.20% (345 questions)
+  15: 51.90% (237 questions)
+  16: 55.56% (117 questions)
+  17: 47.87% (94 questions)
+  18: 65.79% (76 questions)
+  19: 60.47% (43 questions)
+  20: 68.75% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=16, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.75%
+Open: 31.01%
+Accuracy: 46.96%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.18 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.52% (1129 questions)
+  compare: 62.48% (589 questions)
+  logical: 66.22% (1803 questions)
+  query: 31.01% (6805 questions)
+  verify: 65.85% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.77% (5186 questions)
+  cat: 34.55% (1149 questions)
+  global: 42.68% (157 questions)
+  obj: 71.21% (778 questions)
+  rel: 37.60% (5308 questions)
+
+Accuracy / steps number:
+  1: 53.59% (237 questions)
+  2: 39.62% (6395 questions)
+  3: 50.63% (4266 questions)
+  4: 57.38% (793 questions)
+  5: 69.34% (822 questions)
+  6: 87.80% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 22.52% (151 questions)
+  4: 38.73% (630 questions)
+  5: 33.88% (1290 questions)
+  6: 42.77% (2074 questions)
+  7: 46.35% (1642 questions)
+  8: 49.11% (1185 questions)
+  9: 52.85% (1281 questions)
+  10: 54.76% (1249 questions)
+  11: 48.79% (994 questions)
+  12: 53.45% (638 questions)
+  13: 54.98% (462 questions)
+  14: 51.59% (345 questions)
+  15: 47.68% (237 questions)
+  16: 57.26% (117 questions)
+  17: 47.87% (94 questions)
+  18: 59.21% (76 questions)
+  19: 62.79% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=8, STRATEGY=max_attention:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.75%
+Open: 31.39%
+Accuracy: 47.16%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.04 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.25% (1129 questions)
+  compare: 62.65% (589 questions)
+  logical: 66.22% (1803 questions)
+  query: 31.39% (6805 questions)
+  verify: 65.94% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.30% (5186 questions)
+  cat: 34.20% (1149 questions)
+  global: 44.59% (157 questions)
+  obj: 72.11% (778 questions)
+  rel: 38.43% (5308 questions)
+
+Accuracy / steps number:
+  1: 53.59% (237 questions)
+  2: 40.00% (6395 questions)
+  3: 50.80% (4266 questions)
+  4: 56.62% (793 questions)
+  5: 69.59% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 24.50% (151 questions)
+  4: 39.37% (630 questions)
+  5: 32.87% (1290 questions)
+  6: 43.30% (2074 questions)
+  7: 47.32% (1642 questions)
+  8: 49.37% (1185 questions)
+  9: 53.79% (1281 questions)
+  10: 53.88% (1249 questions)
+  11: 47.59% (994 questions)
+  12: 55.33% (638 questions)
+  13: 53.90% (462 questions)
+  14: 51.30% (345 questions)
+  15: 48.95% (237 questions)
+  16: 57.26% (117 questions)
+  17: 50.00% (94 questions)
+  18: 60.53% (76 questions)
+  19: 67.44% (43 questions)
+  20: 62.50% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=8, STRATEGY=attention_range:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.70%
+Open: 31.40%
+Accuracy: 47.15%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.05 (lower is better)
+
+Accuracy / structural type:
+  choose: 66.25% (1129 questions)
+  compare: 62.82% (589 questions)
+  logical: 66.06% (1803 questions)
+  query: 31.40% (6805 questions)
+  verify: 65.90% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.30% (5186 questions)
+  cat: 34.29% (1149 questions)
+  global: 44.59% (157 questions)
+  obj: 71.98% (778 questions)
+  rel: 38.39% (5308 questions)
+
+Accuracy / steps number:
+  1: 53.59% (237 questions)
+  2: 39.97% (6395 questions)
+  3: 50.84% (4266 questions)
+  4: 56.62% (793 questions)
+  5: 69.34% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 24.50% (151 questions)
+  4: 39.37% (630 questions)
+  5: 32.79% (1290 questions)
+  6: 43.30% (2074 questions)
+  7: 47.14% (1642 questions)
+  8: 49.45% (1185 questions)
+  9: 53.94% (1281 questions)
+  10: 53.96% (1249 questions)
+  11: 47.69% (994 questions)
+  12: 55.02% (638 questions)
+  13: 53.90% (462 questions)
+  14: 51.01% (345 questions)
+  15: 48.52% (237 questions)
+  16: 58.12% (117 questions)
+  17: 50.00% (94 questions)
+  18: 60.53% (76 questions)
+  19: 67.44% (43 questions)
+  20: 62.50% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=8, STRATEGY=sparsity:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 64.66%
+Open: 30.12%
+Accuracy: 45.98%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.12 (lower is better)
+
+Accuracy / structural type:
+  choose: 64.66% (1129 questions)
+  compare: 62.82% (589 questions)
+  logical: 64.95% (1803 questions)
+  query: 30.12% (6805 questions)
+  verify: 64.92% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 54.69% (5186 questions)
+  cat: 32.46% (1149 questions)
+  global: 38.85% (157 questions)
+  obj: 70.95% (778 questions)
+  rel: 36.94% (5308 questions)
+
+Accuracy / steps number:
+  1: 51.48% (237 questions)
+  2: 38.72% (6395 questions)
+  3: 49.81% (4266 questions)
+  4: 56.49% (793 questions)
+  5: 67.40% (822 questions)
+  6: 82.93% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 23.18% (151 questions)
+  4: 38.57% (630 questions)
+  5: 32.48% (1290 questions)
+  6: 42.33% (2074 questions)
+  7: 45.31% (1642 questions)
+  8: 48.19% (1185 questions)
+  9: 51.21% (1281 questions)
+  10: 53.40% (1249 questions)
+  11: 48.39% (994 questions)
+  12: 52.35% (638 questions)
+  13: 50.87% (462 questions)
+  14: 53.62% (345 questions)
+  15: 48.95% (237 questions)
+  16: 54.70% (117 questions)
+  17: 40.43% (94 questions)
+  18: 61.84% (76 questions)
+  19: 65.12% (43 questions)
+  20: 59.38% (32 questions)
+  21: 68.42% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=8, STRATEGY=top_k_sum:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 65.94%
+Open: 31.30%
+Accuracy: 47.20%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.06 (lower is better)
+
+Accuracy / structural type:
+  choose: 65.54% (1129 questions)
+  compare: 62.48% (589 questions)
+  logical: 66.50% (1803 questions)
+  query: 31.30% (6805 questions)
+  verify: 66.61% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 55.55% (5186 questions)
+  cat: 34.20% (1149 questions)
+  global: 44.59% (157 questions)
+  obj: 72.11% (778 questions)
+  rel: 38.28% (5308 questions)
+
+Accuracy / steps number:
+  1: 54.85% (237 questions)
+  2: 39.70% (6395 questions)
+  3: 51.08% (4266 questions)
+  4: 57.88% (793 questions)
+  5: 69.46% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 23.84% (151 questions)
+  4: 39.68% (630 questions)
+  5: 33.33% (1290 questions)
+  6: 42.96% (2074 questions)
+  7: 46.77% (1642 questions)
+  8: 48.69% (1185 questions)
+  9: 53.47% (1281 questions)
+  10: 55.40% (1249 questions)
+  11: 48.19% (994 questions)
+  12: 55.02% (638 questions)
+  13: 53.68% (462 questions)
+  14: 52.17% (345 questions)
+  15: 49.79% (237 questions)
+  16: 57.26% (117 questions)
+  17: 48.94% (94 questions)
+  18: 57.89% (76 questions)
+  19: 67.44% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 66.67% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=8, STRATEGY=multi_objective:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 64.47%
+Open: 29.26%
+Accuracy: 45.42%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 3.70 (lower is better)
+
+Accuracy / structural type:
+  choose: 64.30% (1129 questions)
+  compare: 62.31% (589 questions)
+  logical: 64.28% (1803 questions)
+  query: 29.26% (6805 questions)
+  verify: 65.28% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 54.01% (5186 questions)
+  cat: 31.68% (1149 questions)
+  global: 39.49% (157 questions)
+  obj: 69.67% (778 questions)
+  rel: 36.62% (5308 questions)
+
+Accuracy / steps number:
+  1: 49.79% (237 questions)
+  2: 38.36% (6395 questions)
+  3: 48.95% (4266 questions)
+  4: 54.85% (793 questions)
+  5: 68.37% (822 questions)
+  6: 80.49% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 23.84% (151 questions)
+  4: 36.19% (630 questions)
+  5: 31.86% (1290 questions)
+  6: 41.13% (2074 questions)
+  7: 45.07% (1642 questions)
+  8: 47.26% (1185 questions)
+  9: 52.30% (1281 questions)
+  10: 52.28% (1249 questions)
+  11: 47.79% (994 questions)
+  12: 54.55% (638 questions)
+  13: 51.08% (462 questions)
+  14: 51.01% (345 questions)
+  15: 45.99% (237 questions)
+  16: 50.43% (117 questions)
+  17: 45.74% (94 questions)
+  18: 60.53% (76 questions)
+  19: 62.79% (43 questions)
+  20: 59.38% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=8, STRATEGY=graph_based:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+
+Binary: 66.20%
+Open: 31.73%
+Accuracy: 47.55%
+Validity: 0.00%
+Plausibility: 0.00%
+Distribution: 2.90 (lower is better)
+
+Accuracy / structural type:
+  choose: 67.14% (1129 questions)
+  compare: 62.82% (589 questions)
+  logical: 66.78% (1803 questions)
+  query: 31.73% (6805 questions)
+  verify: 66.16% (2252 questions)
+
+Accuracy / semantic type:
+  attr: 56.00% (5186 questions)
+  cat: 36.12% (1149 questions)
+  global: 37.58% (157 questions)
+  obj: 72.75% (778 questions)
+  rel: 38.38% (5308 questions)
+
+Accuracy / steps number:
+  1: 56.12% (237 questions)
+  2: 40.02% (6395 questions)
+  3: 51.64% (4266 questions)
+  4: 57.63% (793 questions)
+  5: 69.34% (822 questions)
+  6: 85.37% (41 questions)
+  7: 100.00% (20 questions)
+  8: 100.00% (3 questions)
+  9: 100.00% (1 questions)
+
+Accuracy / words number:
+  3: 23.84% (151 questions)
+  4: 39.05% (630 questions)
+  5: 32.48% (1290 questions)
+  6: 43.30% (2074 questions)
+  7: 48.36% (1642 questions)
+  8: 50.72% (1185 questions)
+  9: 53.24% (1281 questions)
+  10: 54.04% (1249 questions)
+  11: 49.20% (994 questions)
+  12: 55.02% (638 questions)
+  13: 54.76% (462 questions)
+  14: 54.49% (345 questions)
+  15: 49.79% (237 questions)
+  16: 56.41% (117 questions)
+  17: 46.81% (94 questions)
+  18: 63.16% (76 questions)
+  19: 65.12% (43 questions)
+  20: 65.62% (32 questions)
+  21: 73.68% (19 questions)
+  22: 58.33% (12 questions)
+  23: 25.00% (4 questions)
+  24: 50.00% (2 questions)
+  25: 100.00% (1 questions)
+----------------------------------------
+
+TOKEN=64, HEAD=8, STRATEGY=hierarchical:
+Please make sure to use our provided visual features as gqadataset.org for better comparability. We provide both spatial and object-based features trained on GQA train set.
+In particular please avoid using features from https://github.com/peteanderson80/bottom-up-attention since they were trained on images contained in the GQA validation set and thus may give false scores improvement.
+
+Please consider using --consistency to compute consistency scores for entailed questions.
+If you do so, please provide answers to all questions in val_all_questions.json.
+
+Please consider using --grounding to compute attention scores.
+If you do so, please provide attention maps through --attentions.
+
+Loading questions...
+Loading predictions...
+no prediction for question 201307251. Please add prediction for all questions.
+----------------------------------------

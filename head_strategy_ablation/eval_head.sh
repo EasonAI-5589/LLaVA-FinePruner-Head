@@ -3,77 +3,71 @@
 # ========== Head策略消融研究脚本 ==========
 echo "🧪 开始Head策略消融研究"
 
-# 确保从正确的工作目录启动
+# ========== 基础配置 ==========
 WORK_DIR="/mnt/bn/bes-nas-zqz-lq-v6arnold6/mlx/users/zhangqizhe/code/VTP/LLaVA-FinePruner-Head"
-echo "切换到工作目录: ${WORK_DIR}"
-cd "${WORK_DIR}" || { echo "❌ 错误: 无法切换到工作目录 ${WORK_DIR}"; exit 1; }
-
-# 验证关键目录存在和结构
-echo "验证关键目录..."
-for dir in "playground/data/eval" "llava/eval"; do
-    if [ ! -d "${dir}" ]; then
-        echo "❌ 错误: 关键目录不存在: ${WORK_DIR}/${dir}"
-        exit 1
-    fi
-done
-
-# 检查并创建必要的子目录
-echo "检查评估子目录..."
-if [ ! -d "playground/data/eval/pope" ]; then
-    echo "⚠️  警告: POPE目录不存在，正在创建..."
-    mkdir -p playground/data/eval/pope
-fi
-
-if [ ! -d "playground/data/eval/MME" ]; then
-    echo "⚠️  警告: MME目录不存在，正在创建..."
-    mkdir -p playground/data/eval/MME
-fi
-
-if [ ! -d "playground/data/eval/gqa" ]; then
-    echo "⚠️  警告: GQA目录不存在，正在创建..."
-    mkdir -p playground/data/eval/gqa
-fi
-
-# 检查是否存在错误的嵌套目录
-if [ -d "playground/data/eval/playground" ]; then
-    echo "⚠️  检测到错误的嵌套目录结构: playground/data/eval/playground"
-    echo "建议手动清理此嵌套结构"
-fi
-
-echo "✅ 目录结构验证完成"
-
-# 自动检测可用GPU数量
-if command -v nvidia-smi &> /dev/null; then
-    GPU_COUNT=$(nvidia-smi --list-gpus | wc -l)
-else
-    GPU_COUNT=1
-fi
-
-# 生成GPU列表 (0,1,2,...)
-gpu_list=$(seq -s, 0 $((GPU_COUNT-1)))
-IFS=',' read -ra GPULIST <<< "$gpu_list"
-CHUNKS=${#GPULIST[@]}
-
-echo "检测到 ${GPU_COUNT} 张GPU: ${gpu_list}"
-
 CKPT_DIR="/mnt/bn/bes-mllm-shared/checkpoint/LLaVA"
 DATA_DIR="/mnt/bn/bes-mllm-shared/data/LLaVA/LLaVA-Eval"
 CKPT="llava-v1.5-7b"
-
 METHOD="ablation_a"
 
 # 测试参数组合
 TOKEN_NUMS=(192 128 64)
 HEAD_NUMS=(24 16 8)
-
-# 效果较好的头选择策略 + 新增复杂策略
 GOOD_STRATEGIES=("max_attention" "attention_range" "sparsity" "top_k_sum" "multi_objective" "graph_based" "hierarchical")
 
-# 创建分别的结果文件
+# 结果文件路径
 POPE_RESULTS_FILE="${WORK_DIR}/head_strategy_pope_results.txt"
 MME_RESULTS_FILE="${WORK_DIR}/head_strategy_mme_results.txt"
 TEXTVQA_RESULTS_FILE="${WORK_DIR}/head_strategy_textvqa_results.txt"
 GQA_RESULTS_FILE="${WORK_DIR}/head_strategy_gqa_results.txt"
+
+# ========== 环境初始化 ==========
+setup_environment() {
+    echo "切换到工作目录: ${WORK_DIR}"
+    cd "${WORK_DIR}" || { echo "❌ 错误: 无法切换到工作目录"; exit 1; }
+
+    # 验证关键目录
+    echo "验证关键目录..."
+    for dir in "playground/data/eval" "llava/eval"; do
+        [ ! -d "${dir}" ] && { echo "❌ 错误: 关键目录不存在: ${dir}"; exit 1; }
+    done
+
+    # 创建评估子目录
+    echo "检查评估子目录..."
+    for subdir in "pope" "MME" "gqa" "textvqa"; do
+        [ ! -d "playground/data/eval/${subdir}" ] && {
+            echo "⚠️  创建目录: playground/data/eval/${subdir}"
+            mkdir -p "playground/data/eval/${subdir}"
+        }
+    done
+
+    # 检查嵌套目录问题
+    [ -d "playground/data/eval/playground" ] && {
+        echo "⚠️  检测到错误的嵌套目录结构，建议手动清理"
+    }
+
+    echo "✅ 目录结构验证完成"
+}
+
+# ========== GPU配置 ==========
+setup_gpu() {
+    if command -v nvidia-smi &> /dev/null; then
+        GPU_COUNT=$(nvidia-smi --list-gpus | wc -l)
+        gpu_list=$(seq -s, 0 $((GPU_COUNT-1)))
+        IFS=',' read -ra GPULIST <<< "$gpu_list"
+        CHUNKS=${#GPULIST[@]}
+    else
+        GPU_COUNT=1
+        GPULIST=(0)
+        CHUNKS=1
+        gpu_list="0"
+    fi
+    echo "检测到 ${GPU_COUNT} 张GPU: ${gpu_list}"
+}
+
+# 执行初始化
+setup_environment
+setup_gpu
 
 echo "结果将分别保存到:"
 echo "POPE: ${POPE_RESULTS_FILE}"
