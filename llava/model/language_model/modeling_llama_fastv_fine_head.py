@@ -64,8 +64,92 @@ class FineFastVLlamaModel(LlamaModel):
         self.R = R_dict[self.scale][self.K][visual_token_num]
         if self.anyres:
             self.R *= 5
-        self.H = 32  # 32(all) 24 16 
+        self.H = 32  # 32(all) 24 16
         self.remove_sink = False
+
+        # 头选择策略配置
+        self.head_selection_strategy = getattr(config, 'head_selection_strategy', 'sum')
+        print(f"🔧 Head selection strategy: {self.head_selection_strategy}")
+
+    def select_heads_by_strategy(self, image_attention):
+        """
+        根据配置的策略选择attention heads
+
+        Args:
+            image_attention: (H, N) - 每个head对visual tokens的attention
+
+        Returns:
+            visual_head_index: 选中的head索引
+            aggregated_attention: 聚合后的attention分布
+        """
+        H, N = image_attention.shape
+
+        if self.head_selection_strategy == 'sum':
+            # 原始FastV方法：选择attention总和最高的heads
+            head_scores = image_attention.sum(dim=-1)
+
+        elif self.head_selection_strategy == 'variance':
+            # 选择attention分布方差最大的heads (信息丰富度)
+            head_scores = image_attention.var(dim=-1)
+
+        elif self.head_selection_strategy == 'entropy':
+            # 选择attention熵适中的heads (既不太分散也不太集中)
+            attention_probs = torch.softmax(image_attention, dim=-1)
+            entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
+            # 选择熵在中等范围的heads
+            mean_entropy = entropy.mean()
+            head_scores = -(entropy - mean_entropy).abs()  # 距离平均熵越近分数越高
+
+        elif self.head_selection_strategy == 'max_attention':
+            # 选择最大attention值最高的heads
+            head_scores = image_attention.max(dim=-1)[0]
+
+        elif self.head_selection_strategy == 'attention_range':
+            # 选择attention值范围最大的heads
+            head_scores = image_attention.max(dim=-1)[0] - image_attention.min(dim=-1)[0]
+
+        elif self.head_selection_strategy == 'sparsity':
+            # 选择稀疏性适中的heads
+            attention_probs = torch.softmax(image_attention, dim=-1)
+            sparsity = (attention_probs ** 2).sum(dim=-1)  # L2 norm (higher = more sparse)
+            head_scores = sparsity
+
+        elif self.head_selection_strategy == 'top_k_sum':
+            # 选择top-k attention总和最高的heads
+            k = min(64, N // 4)  # top 25%
+            topk_attention = image_attention.topk(k=k, dim=-1)[0]
+            head_scores = topk_attention.sum(dim=-1)
+
+        elif self.head_selection_strategy == 'weighted_quality':
+            # 结合峰值和方差的质量分数
+            max_attn = image_attention.max(dim=-1)[0]
+            var_attn = image_attention.var(dim=-1)
+            head_scores = max_attn * var_attn
+
+        elif self.head_selection_strategy == 'gini_coefficient':
+            # 基于基尼系数选择heads (衡量不平等性)
+            sorted_attn = torch.sort(image_attention, dim=-1)[0]
+            n = sorted_attn.shape[-1]
+            index = torch.arange(1, n + 1, device=sorted_attn.device).float()
+            gini = (2 * (sorted_attn * index).sum(dim=-1)) / (n * sorted_attn.sum(dim=-1)) - (n + 1) / n
+            head_scores = gini
+
+        else:
+            # 默认使用sum策略
+            head_scores = image_attention.sum(dim=-1)
+
+        # 选择top-H heads
+        visual_head_index = head_scores.topk(k=self.H).indices
+
+        # 聚合选中heads的attention - 使用加权平均
+        selected_attention = image_attention[visual_head_index]  # (H, N)
+        selected_scores = head_scores[visual_head_index]  # (H,)
+
+        # 计算权重 (归一化后的分数)
+        weights = torch.softmax(selected_scores, dim=0)  # (H,)
+        aggregated_attention = (selected_attention * weights.unsqueeze(-1)).sum(dim=0)  # (N,)
+
+        return visual_head_index, aggregated_attention
     
     def forward(
         self,
@@ -193,75 +277,12 @@ class FineFastVLlamaModel(LlamaModel):
                         hidden_states = layer_outputs[0]
                         last_attention = layer_outputs[1]
     
-                        # FastV implementation - 根据情况选择不同的attention计算方式
-                        use_last_token = False   # 设置为True使用最后一个token方法
-                        use_text_token = True  # 设置为True使用text+generated token方法
-                        
-                        if use_last_token:
-                            # 方法1: 使用最后一个token对visual token的attention (原始FastV方法)
-                            image_attention = last_attention[0, :, -1, self.system_prompt_length:self.system_prompt_length+visual_token_length] # (H, N)
-                        elif use_text_token:
-                            # 方法2: 取所有text token和generated token对visual token的attention
-                            # last_attention shape: (batch_size, num_heads, seq_length, seq_length)
-                            # 我们取从visual token之后的所有token对visual token的attention
-                            text_and_generated_tokens = last_attention[0, :, self.system_prompt_length+visual_token_length:, self.system_prompt_length:self.system_prompt_length+visual_token_length] # (H, T_text, N)
-                            
-                            # 复杂筛选方案：多阶段注意力优化
-                            # 阶段1: 计算text token的重要性分数
-                            text_importance = text_and_generated_tokens.sum(dim=-1) # (H, T_text)
-                            
-                            # 阶段2: 动态top-k筛选重要的text token
-                            # 方案A: 基于重要性阈值的动态筛选
-                            importance_threshold = text_importance.mean() + 0.5 * text_importance.std()  # 动态阈值
-                            # 计算超过阈值的text token数量
-                            above_threshold = (text_importance > importance_threshold.unsqueeze(-1)).sum(dim=-1)  # (H,)
-                            # 确保至少保留3个，最多保留min(12, total_text_tokens)
-                            k_text = torch.clamp(above_threshold, min=3, max=min(12, text_and_generated_tokens.shape[1]))
-                            
-                            # 方案B: 基于重要性分布的百分位数筛选（注释掉，可选择使用）
-                            # # 使用75%分位数作为阈值
-                            # percentile_75 = torch.quantile(text_importance, 0.75, dim=-1)  # (H,)
-                            # above_percentile = (text_importance > percentile_75.unsqueeze(-1)).sum(dim=-1)
-                            # k_text = torch.clamp(above_percentile, min=2, max=min(15, text_and_generated_tokens.shape[1]))
-                            
-                            # 方案C: 基于重要性衰减的自适应筛选（注释掉，可选择使用）
-                            # # 计算重要性排序后的衰减率
-                            # sorted_importance, _ = text_importance.sort(dim=-1, descending=True)
-                            # decay_ratio = sorted_importance[:, 1:] / (sorted_importance[:, :-1] + 1e-8)
-                            # # 找到衰减率超过阈值的第一个位置
-                            # decay_threshold = 0.7  # 衰减率阈值
-                            # significant_positions = (decay_ratio > decay_threshold).sum(dim=-1) + 1
-                            # k_text = torch.clamp(significant_positions, min=3, max=min(10, text_and_generated_tokens.shape[1]))
-                            
-                            # 执行动态top-k筛选
-                            top_k_text_importance, top_k_indices = text_importance.topk(k_text.max().item(), dim=-1) # (H, max_k)
-                            # 根据每个head的实际k_text值进行masking
-                            mask = torch.arange(top_k_text_importance.shape[1], device=top_k_text_importance.device).unsqueeze(0) < k_text.unsqueeze(1)
-                            top_k_text_importance = top_k_text_importance * mask.float()
-                            top_k_indices = top_k_indices * mask.long()
-                            
-                            # 阶段3: 基于top-k text token重新计算attention
-                            top_k_attention = text_and_generated_tokens.gather(1, top_k_indices.unsqueeze(-1).expand(-1, -1, text_and_generated_tokens.shape[-1])) # (H, k_text, N)
-                            
-                            # 阶段4: 计算visual token的敏感度分数
-                            visual_sensitivity = top_k_attention.sum(dim=1) # (H, N)
-                            
-                            # 阶段5: 使用sigmoid激活突出敏感的visual token
-                            sensitivity_weights = torch.sigmoid(visual_sensitivity / visual_sensitivity.std()) # (H, N)
-                            
-                            # 阶段6: 最终聚合 - 结合text重要性和visual敏感度
-                            text_weights = torch.softmax(top_k_text_importance, dim=-1) # (H, k_text)
-                            weighted_attention = (top_k_attention * text_weights.unsqueeze(-1)) # (H, k_text, N)
-                            
-                            # 阶段7: 应用visual敏感度权重，得到最终的image_attention
-                            image_attention = (weighted_attention.sum(dim=1)) * sensitivity_weights # (H, N)
-                        else:
-                            # 默认使用最后一个token方法
-                            image_attention = last_attention[0, :, -1, self.system_prompt_length:self.system_prompt_length+visual_token_length] # (H, N)
+                        # 简化的attention获取：使用最后一个token对visual tokens的attention
+                        image_attention = last_attention[0, :, -1, self.system_prompt_length:self.system_prompt_length+visual_token_length]
 
 
-                        head_attention = image_attention.sum(dim=-1)
-                        visual_head_index = head_attention.topk(k=self.H).indices # (H)
+                        # 简化的头选择策略 - 基于配置的策略选择方法
+                        visual_head_index, final_image_attention = self.select_heads_by_strategy(image_attention)
                         
                         # 两种筛选方法选择
                         use_center_region = False  # True: 基于空间位置选择, False: 基于attention值选择
@@ -285,8 +306,8 @@ class FineFastVLlamaModel(LlamaModel):
                             
                         else:
                             # 方法2: 基于attention值选择 - 选择attention值最高的self.R个token
-                            # 计算选中head的平均attention分布
-                            image_attention_selected = image_attention[visual_head_index].mean(dim=0)  # (N)
+                            # 使用新的聚合后的attention分布
+                            image_attention_selected = final_image_attention  # (N)
                             
                             # 使用top-k选择attention值最高的self.R个token，然后排序
                             visual_token_length = self.R
