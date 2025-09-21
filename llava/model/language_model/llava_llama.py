@@ -27,6 +27,7 @@ from transformers.generation.utils import GenerateOutput
 from .modeling_llama_fastv import FastVLlamaModel
 from .modeling_llama_fastv_fine import FineFastVLlamaModel
 from .modeling_llama_fastv_ablation_a import FineFastVLlamaModelAblationA
+from .modeling_llama_fastv_ablation_dynamic import FineFastVLlamaModelAblationDynamic
 from .modeling_llama_pdrop import PDropLlamaModel
 from .modeling_llama_sparsevlm import SparseLlamaModel
 from ..llava_arch import LlavaMetaModel, LlavaMetaForCausalLM
@@ -67,6 +68,14 @@ class FineFastVLlavaLlamaModelAblationA(LlavaMetaModel, FineFastVLlamaModelAblat
         super(FineFastVLlavaLlamaModelAblationA, self).__init__(config, visual_token_num=visual_token_num)
 
 
+class FineFastVLlavaLlamaModelAblationDynamic(LlavaMetaModel, FineFastVLlamaModelAblationDynamic):
+    # 动态Head选择: 层次化智能选择
+    config_class = LlavaLlamaConfig
+
+    def __init__(self, config: LlamaConfig, visual_token_num: int):
+        super(FineFastVLlavaLlamaModelAblationDynamic, self).__init__(config, visual_token_num=visual_token_num)
+
+
 class PDropLlavaLlamaModel(LlavaMetaModel, PDropLlamaModel):
     # Alter LlavaLlamaModel to PDropLlavaLlamaModel
     config_class = LlavaLlamaConfig
@@ -95,6 +104,9 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
         elif pruning_method == "ablation_a":
             print(f"Use Ablation A (Head Selection)!")
             self.model = FineFastVLlavaLlamaModelAblationA(config, visual_token_num)
+        elif pruning_method == "dynamic_head":
+            print(f"Use Dynamic Head Selection!")
+            self.model = FineFastVLlavaLlamaModelAblationDynamic(config, visual_token_num)
         elif pruning_method == "pdrop":
             print(f"Use PDrop!")
             self.model = PDropLlavaLlamaModel(config, visual_token_num)
