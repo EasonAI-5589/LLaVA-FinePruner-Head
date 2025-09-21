@@ -180,7 +180,8 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
             print(f"🎯 Intelligent Consensus-Diversity: {len(final_indices)} heads")
             print(f"   Consensus: {len(consensus_heads)} | Diversity: {len(diversity_heads)}")
             print(f"   Dynamic threshold: {dynamic_threshold:.3f} | Complexity: {attention_complexity:.3f}")
-            print(f"   Strategy qualities: {[(s, f'{r['quality']:.3f}') for s, r in strategy_selections.items()]}")
+            strategy_qualities_str = [(s, f"{r['quality']:.3f}") for s, r in strategy_selections.items()]
+            print(f"   Strategy qualities: {strategy_qualities_str}")
             print(f"   Selected consensus heads: {consensus_heads}")
             print(f"   Selected diversity heads: {diversity_heads}")
             print(f"   Final head indices: {final_indices.tolist()}")
