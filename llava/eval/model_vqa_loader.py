@@ -93,6 +93,14 @@ def eval_model(args):
     model.config.H=args.H
     model.config.head_selection_strategy=args.head_selection_strategy
 
+    # 添加动态选择超参数
+    if hasattr(args, 'enable_dynamic_selection'):
+        model.config.enable_dynamic_selection = args.enable_dynamic_selection
+    if hasattr(args, 'min_heads'):
+        model.config.min_heads = args.min_heads
+    if hasattr(args, 'max_heads'):
+        model.config.max_heads = args.max_heads
+
     # Data
     questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
     questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
@@ -156,7 +164,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=128)
     parser.add_argument("--pruning_method", type=str, default="ablation_a",
-                        help="Pruning method: fastv, fastv+finepruner, ablation_a, pdrop, sparsevlm")
+                        help="Pruning method: fastv, fastv+finepruner, ablation_a, dynamic_head, pdrop, sparsevlm")
     parser.add_argument("--visual_token_num", type=int, default=576)
     parser.add_argument("--H", type=int, default=32)
     parser.add_argument("--head-selection-strategy", type=str, default="sum",
@@ -165,6 +173,14 @@ if __name__ == "__main__":
                                 "weighted_quality", "gini_coefficient",
                                 "multi_objective", "graph_based", "hierarchical"],
                         help="Head selection strategy for attention")
+
+    # 动态选择参数
+    parser.add_argument("--enable-dynamic-selection", action="store_true", default=False,
+                        help="Enable dynamic head selection")
+    parser.add_argument("--min-heads", type=int, default=6,
+                        help="Minimum number of heads for dynamic selection")
+    parser.add_argument("--max-heads", type=int, default=24,
+                        help="Maximum number of heads for dynamic selection")
     args = parser.parse_args()
 
     eval_model(args)
