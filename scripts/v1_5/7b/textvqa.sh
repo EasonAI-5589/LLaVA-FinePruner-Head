@@ -13,7 +13,7 @@ SPLIT="llava_textvqa_val_v051_ocr"
 
 METHOD=${1}
 TOKEN=${2}
-H=${3}
+H=${3:-32}
 PARAM="vtn_${TOKEN}_${H}"
 
 for IDX in $(seq 0 $((CHUNKS-1))); do

@@ -13,7 +13,7 @@ SPLIT="llava_test"
 
 METHOD=${1}
 TOKEN=${2}
-HEAD=${3}
+HEAD=${3:-32}
 
 PARAM="vtn_${TOKEN}_${HEAD}"
 
