@@ -239,17 +239,35 @@ class FineFastVLlamaModelAblationA(LlamaModel):
         return visual_head_index
 
     def head_selection_hierarchical(self, image_attention):
-        """方法11: 分层选择策略 - 粗选+精选的两阶段方法"""
+        """方法11: 分层选择策略 - 粗选+精选的两阶段方法 (支持8 head配置)"""
         attention_probs = torch.softmax(image_attention, dim=-1)  # (H, N)
         H, N = attention_probs.shape
 
-        # 第一阶段: 粗选 (保留更多候选)
-        coarse_k = min(H, max(self.H * 2, 16))  # 粗选保留2倍目标数量
+        # 修复：当可用头数较少时，直接简化为单阶段选择
+        if H <= self.H or H <= 8:
+            # 对于8 head或更少的情况，使用简化的单阶段方法
+            sparsity = (attention_probs ** 2).sum(dim=-1)
+            max_attention = attention_probs.max(dim=-1)[0]
+            variance = attention_probs.var(dim=-1)
+
+            # 简单而稳定的组合
+            composite_score = 0.5 * sparsity + 0.3 * max_attention + 0.2 * variance
+            visual_head_index = composite_score.topk(k=self.H).indices
+            return visual_head_index
+
+        # 第一阶段: 粗选 (只有在H足够大时才使用两阶段)
+        coarse_k = min(H, max(self.H * 2, self.H + 4))  # 确保coarse_k不会超过H
 
         # 粗选指标: 简单的稀疏性+熵组合
         sparsity = (attention_probs ** 2).sum(dim=-1)
         entropy = -(attention_probs * torch.log(attention_probs + 1e-8)).sum(dim=-1)
-        entropy_norm = (entropy - entropy.min()) / (entropy.max() - entropy.min() + 1e-8)
+
+        # 避免除零错误
+        if entropy.max() == entropy.min():
+            entropy_norm = torch.zeros_like(entropy)
+        else:
+            entropy_norm = (entropy - entropy.min()) / (entropy.max() - entropy.min())
+
         coarse_scores = 0.6 * sparsity + 0.4 * (1 - entropy_norm)
 
         # 获取粗选候选
@@ -257,27 +275,39 @@ class FineFastVLlamaModelAblationA(LlamaModel):
         coarse_attention = attention_probs[coarse_indices]
 
         # 第二阶段: 精选 (复杂指标)
+        coarse_len = coarse_attention.shape[0]
+
+        # 如果粗选后数量等于目标数量，直接返回
+        if coarse_len <= self.H:
+            return coarse_indices
+
         # 1. 信息理论指标
         fine_entropy = -(coarse_attention * torch.log(coarse_attention + 1e-8)).sum(dim=-1)
 
-        # 2. KL散度 (与均匀分布的距离)
+        # 2. KL散度 (与均匀分布的距离) - 简化版
         uniform_dist = torch.ones_like(coarse_attention) / N
-        kl_div = torch.nn.functional.kl_div(
-            torch.log(coarse_attention + 1e-8), uniform_dist, reduction='none'
-        ).sum(dim=-1)
+        kl_div = (coarse_attention * torch.log(coarse_attention / (uniform_dist + 1e-8) + 1e-8)).sum(dim=-1)
 
-        # 3. 互补性 (与其他选中头的差异)
-        pairwise_distances = torch.cdist(coarse_attention, coarse_attention, p=2)
-        avg_distance = pairwise_distances.mean(dim=-1)
+        # 3. 互补性 (简化版) - 避免大矩阵计算
+        if coarse_len > 1:
+            attention_norm = torch.nn.functional.normalize(coarse_attention, p=2, dim=-1)
+            # 只计算与平均的距离，而不是所有配对距离
+            avg_attention = attention_norm.mean(dim=0, keepdim=True)
+            diversity = torch.norm(attention_norm - avg_attention, p=2, dim=-1)
+        else:
+            diversity = torch.ones(coarse_len, device=coarse_attention.device)
 
         # 4. 稳定性指标
         stability = 1 / (coarse_attention.std(dim=-1) + 1e-8)
 
         # 归一化并组合所有指标
-        metrics = [fine_entropy, kl_div, avg_distance, stability]
+        metrics = [fine_entropy, kl_div, diversity, stability]
         normalized_metrics = []
         for metric in metrics:
-            metric_norm = (metric - metric.min()) / (metric.max() - metric.min() + 1e-8)
+            if metric.max() == metric.min():
+                metric_norm = torch.zeros_like(metric)
+            else:
+                metric_norm = (metric - metric.min()) / (metric.max() - metric.min())
             normalized_metrics.append(metric_norm)
 
         # 精选得分
