@@ -69,6 +69,7 @@ class FineFastVLlamaModelAblationDynamic(LlamaModel):
         # 简化的头选择策略配置
         self.head_selection_strategy = getattr(config, 'head_selection_strategy', 'sum')
         self.enable_dynamic_selection = getattr(config, 'enable_dynamic_selection', True)
+        self.debug_mode = getattr(config, 'debug_mode', False)
 
         print(f"🔧 Dynamic Head Selection: strategy={self.head_selection_strategy}, enabled={self.enable_dynamic_selection}")
 
