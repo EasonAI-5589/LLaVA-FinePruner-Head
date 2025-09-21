@@ -97,7 +97,6 @@ def eval_model(args):
     model.config.enable_dynamic_selection = getattr(args, 'enable_dynamic_selection', False)
 
     # 添加debug模式支持
-    import os
     if os.getenv('LLAVA_DEBUG_MODE') == 'true' or getattr(args, 'debug_mode', False):
         model.config.debug_mode = True
         print("🐛 Debug mode enabled for intelligent consensus-diversity strategy")
